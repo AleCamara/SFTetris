@@ -1,26 +1,11 @@
-#include <SFML/Graphics.hpp>
+#include "Game.h"
+#include "MenuStage.h"
 
 int main(int argc, char *argv[])
 {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML installation test");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
-
-	while(window.isOpen())
-	{
-		sf::Event event;
-		while(window.pollEvent(event))
-		{
-			if(event.type == sf::Event::Closed)
-			{
-				window.close();
-			}
-		}
-
-		window.clear();
-		window.draw(shape);
-		window.display();
-	}
+	sm::Game::instance()->getLogger()->setDebugLevel(5);
+	sm::Game::instance()->setStage(new sm::MenuStage());
+	sm::Game::instance()->loop();
 
 	return 0;
 }

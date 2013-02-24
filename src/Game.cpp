@@ -16,6 +16,7 @@ namespace sm
 	Game::Game(void): RenderWindow(VIDEO_MODE, TITLE, STYLE), mStage(), mLogger(new Logger())
 	{
 		setFramerateLimit(FRAMERATE);
+		srand(time(0));
 	}
 
 	Game::~Game(void)
@@ -38,7 +39,11 @@ namespace sm
 
 	void Game::setStage(State *stage)
 	{
-		mStage.reset(stage);
+		if(stage)
+		{
+			stage->init();
+			mStage.reset(stage);
+		}
 	}
 
 	Logger *Game::getLogger(void)
@@ -61,12 +66,12 @@ namespace sm
 				}
 			}
 
+			clear(sf::Color(0x20, 0x20, 0x20, 255));
 			if(mStage)
 			{
 				mStage->update();
+				draw(*mStage.get());
 			}
-
-			clear();
 			display();
 		}
 	}

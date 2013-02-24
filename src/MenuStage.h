@@ -10,6 +10,6 @@ namespace sm
 		MenuStage(void) {}
 		virtual ~MenuStage(void) {}
 
-		virtual void update(void);
+		virtual void init(void);
 	};
 }

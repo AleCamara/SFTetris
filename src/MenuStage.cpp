@@ -1,7 +1,7 @@
 #include "MenuStage.h"
 
 #include "Game.h"
-#include "Block.h"
+#include "Board.h"
 
 namespace sm
 {
@@ -10,9 +10,6 @@ namespace sm
 		Game::instance()->getLogger()->getBuffer() << "MenuStage::init(void) called";
 		Game::instance()->getLogger()->debug(5);
 
-		for(int k=0; k<100; k++)
-		{
-			addEntity(new Block());
-		}
+		addEntity(new Board(21, 15));
 	}
 }

@@ -3,30 +3,44 @@
 #include <stdlib.h>
 #include <time.h>
 #include <SFML\Graphics\RenderTarget.hpp>
-#include <SFML\Graphics\RectangleShape.hpp>
 
 namespace sm
 {
-	const sf::Color Block::sColorArray[Block::BlockColor::Count] = {sf::Color::Blue,
-		                                                            sf::Color::Magenta,
-											                        sf::Color::Green,
-											                        sf::Color::Yellow,
-											                        sf::Color::Red};
+	const float Block::SIZE = 15.f;
+	const float Block::PADDING = 2.f;
 
-	Block::Block(void)
+	const sf::Color Block::sColorArray[Block::BlockColor::CountAll] = {sf::Color::Blue,
+		                                                               sf::Color::Magenta,
+											                           sf::Color::Green,
+											                           sf::Color::Yellow,
+	   														   		   sf::Color::Red,
+											                           sf::Color(0x40, 0x40, 0x40, 255)};
+	
+	Block::Block(void): mActive(false), mRectangle(sf::Vector2f(SIZE, SIZE))
 	{
 		mColor = getRandomColor();
-		setPosition(rand() % 300, rand() % 400);
+		activate();
 	}
 
 	Block::~Block(void)	{}
 
+	void Block::activate(void)
+	{
+		mActive = true;
+		mRectangle.setFillColor(sColorArray[mColor]);
+	}
+
+	void Block::deactivate(void)
+	{
+		mActive = false;
+		mRectangle.setFillColor(sColorArray[BlockColor::CountAll-1]);
+	}
+
 	void Block::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		states.transform *= getTransform();
-		sf::RectangleShape rect(sf::Vector2f(15, 15));
-		rect.setFillColor(sColorArray[mColor]);
-		target.draw(rect, states);
+		
+		target.draw(mRectangle, states);
 		Entity::draw(target, states);
 	}
 

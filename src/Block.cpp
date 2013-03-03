@@ -43,13 +43,13 @@ namespace sm
 		Entity::draw(target, states);
 	}
 
-	Block::BlockColor Block::getRandomColor(void) const
+	Block::BlockColor Block::getRandomColor(void)
 	{
 		return convertIntToColor(Game::instance()->getMath()->getRandomInteger()
 			% (Block::BlockColor::Count-1));
 	}
 
-	Block::BlockColor Block::convertIntToColor(int colorInt) const
+	Block::BlockColor Block::convertIntToColor(int colorInt)
 	{
 		BlockColor out = Blue;
 

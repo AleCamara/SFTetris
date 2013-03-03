@@ -16,6 +16,7 @@ namespace sm
 		void activateBlock(const unsigned int, const unsigned int);
 		void deactivateBlock(const unsigned int, const unsigned int);
 		void resetBlocks(void);
+		void changeBlockColor(const unsigned int, const unsigned int, Block::BlockColor);
 
 		unsigned int getNumRows(void) const { return mSizeI; }
 		unsigned int getNumColumns(void) const {return mSizeJ; }

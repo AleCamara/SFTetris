@@ -44,6 +44,14 @@ namespace sm
 		}
 	}
 
+	void Board::changeBlockColor(const unsigned int i, const unsigned int j, Block::BlockColor color)
+	{
+		if(checkIndex(i, j))
+		{
+			mBlocks.at(getIndex(i, j))->setColor(color);
+		}
+	}
+
 	bool Board::checkBoardPosition(const unsigned int i, const unsigned int j) const
 	{
 		if(checkIndex(i, j))

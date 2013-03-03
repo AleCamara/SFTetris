@@ -12,6 +12,10 @@ namespace sm
 		mType = getRandomType();
 		mRotation = getRandomRotation();
 		setNumBlocks();
+		for(int k=0; k<mNumBlocks; ++k)
+		{
+			mColors[k] = Block::getRandomColor();
+		}
 		turnOn();
 	}
 	
@@ -57,6 +61,7 @@ namespace sm
 		{
 			row = mRow + BlockRow[mType][mRotation][k];
 			column = mColumn + BlockColumn[mType][mRotation][k];
+			mBoard->changeBlockColor(row, column, mColors[k]);
 			mBoard->activateBlock(row, column);
 		}
 	}

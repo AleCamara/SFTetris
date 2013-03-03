@@ -2,6 +2,7 @@
 
 #include <boost\shared_ptr.hpp>
 #include "Entity.h"
+#include "Block.h"
 
 namespace sm
 {
@@ -51,6 +52,7 @@ namespace sm
 		int mColumn, mRow;
 		const boost::shared_ptr<Board> mBoard;
 		bool mStuck;
+		Block::BlockColor mColors[5];
 	
 		static const int RotationCount = 4;
 		static const int BlockRow[Type::Count][RotationCount][5];
@@ -65,7 +67,6 @@ namespace sm
 		Type getRandomType(void) const;
 		Type convertIntToType(int) const;
 		unsigned int getRandomRotation(void) const;
-
 
 		Piece(void) {};
 		Piece(const Piece&) {}

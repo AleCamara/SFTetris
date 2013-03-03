@@ -3,6 +3,7 @@
 #include <SFML\Graphics\RectangleShape.hpp>
 #include <SFML\Graphics\Color.hpp>
 #include "Entity.h"
+#include "Piece.h"
 
 namespace sm
 {
@@ -38,6 +39,7 @@ namespace sm
 		bool mActive;
 		sf::RectangleShape mRectangle;
 
-		BlockColor getRandomColor(void);
+		BlockColor getRandomColor(void) const;
+		BlockColor convertIntToColor(int) const;
 	};
 }

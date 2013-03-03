@@ -1,8 +1,7 @@
 #include "Block.h"
 
-#include <stdlib.h>
-#include <time.h>
 #include <SFML\Graphics\RenderTarget.hpp>
+#include "Game.h"
 
 namespace sm
 {
@@ -44,11 +43,17 @@ namespace sm
 		Entity::draw(target, states);
 	}
 
-	Block::BlockColor Block::getRandomColor(void)
+	Block::BlockColor Block::getRandomColor(void) const
+	{
+		return convertIntToColor(Game::instance()->getMath()->getRandomInteger()
+			% (Block::BlockColor::Count-1));
+	}
+
+	Block::BlockColor Block::convertIntToColor(int colorInt) const
 	{
 		BlockColor out = Blue;
 
-		switch(int(rand() % (Block::BlockColor::Count-1)))
+		switch(colorInt)
 		{
 		case 1:
 			out = Magenta;

@@ -12,7 +12,6 @@ namespace sm
 			for(unsigned int j=0; j<mSizeJ; ++j)
 			{
 				boost::shared_ptr<Block> block(new Block());
-				block->setOrigin(-25, -25);
 				block->setPosition(j*(Block::SIZE + Block::PADDING), i*(Block::SIZE + Block::PADDING));
 				mBlocks.push_back(block);
 			}
@@ -25,7 +24,7 @@ namespace sm
 	{
 		if(checkIndex(i, j))
 		{
-
+			mBlocks.at(getIndex(i, j))->activate();
 		}
 	}
 
@@ -33,13 +32,16 @@ namespace sm
 	{
 		if(checkIndex(i, j))
 		{
-
+			mBlocks.at(getIndex(i, j))->deactivate();
 		}
 	}
 
 	void Board::resetBlocks(void)
 	{
-		
+		for(int k=0; k<mBlocks.size(); ++k)
+		{
+			mBlocks.at(k)->deactivate();
+		}
 	}
 
 	bool Board::checkBoardPosition(const unsigned int i, const unsigned int j) const
@@ -54,6 +56,7 @@ namespace sm
 
 	void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
+		states.transform *= getTransform();
 		BlockContainerType::const_iterator iter = mBlocks.cbegin();
 		for(; iter != mBlocks.cend(); ++iter) 
 		{

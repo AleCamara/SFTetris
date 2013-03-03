@@ -6,49 +6,72 @@
 
 namespace sm
 {
-	Game *Game::sInstance = 0;
+	boost::shared_ptr<Game> Game::sInstance;
 	
 	const unsigned int Game::FRAMERATE = 60;
-	const sf::VideoMode Game::VIDEO_MODE = sf::VideoMode(300, 400);
+	const sf::VideoMode Game::VIDEO_MODE = sf::VideoMode(325, 400);
 	const std::string Game::TITLE = std::string("Simple+Fast TETRIS");
 	const unsigned int Game::STYLE = sf::Style::Titlebar | sf::Style::Close;
 
-	Game::Game(void): RenderWindow(VIDEO_MODE, TITLE, STYLE), mStage(), mLogger(new Logger())
+	Game::Game(void): RenderWindow(VIDEO_MODE, TITLE, STYLE), mStage(), mLogger(new Logger()),
+		mActions(), mDeltaClock(), mDeltaTime()
 	{
 		setFramerateLimit(FRAMERATE);
-		srand(time(0));
+
+		mMath = boost::shared_ptr<MathSystem>(new MathSystem());
+		mMath->init();
 	}
 
 	Game::~Game(void)
 	{
-		if(sInstance)
+		if(mMath.get())
 		{
-			delete sInstance;
+			mMath->quit();
 		}
 	}
 
-	Game *Game::instance(void)
+	boost::shared_ptr<Game> Game::instance(void)
 	{
 		if(!sInstance)
 		{
-			sInstance = new Game();
+			sInstance = boost::shared_ptr<Game>(new Game());
 		}
 
 		return sInstance;
 	}
 
-	void Game::setStage(State *stage)
+	void Game::setStage(boost::shared_ptr<State> stage)
 	{
 		if(stage)
 		{
 			stage->init();
-			mStage.reset(stage);
+			mStage.swap(stage);
 		}
 	}
 
-	Logger *Game::getLogger(void)
+	boost::shared_ptr<MathSystem> Game::getMath(void)
 	{
-		return mLogger.get();
+		return mMath;
+	}
+
+	boost::shared_ptr<Logger> Game::getLogger(void)
+	{
+		return mLogger;
+	}
+	
+	void Game::addAction(const boost::shared_ptr<Action>& action)
+	{
+		mActions.push_back(boost::shared_ptr<Action>(action));
+	}
+
+	const Game::ActionContainer& Game::getActions(void) const
+	{
+		return mActions;
+	}
+
+	sf::Time Game::getDeltaTime(void) const
+	{
+		return mDeltaTime;
 	}
 
 	void Game::loop(void)
@@ -73,6 +96,10 @@ namespace sm
 				draw(*mStage.get());
 			}
 			display();
+
+			mActions.clear();
+
+			mDeltaTime = mDeltaClock.restart();
 		}
 	}
 

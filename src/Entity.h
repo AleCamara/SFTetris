@@ -14,7 +14,7 @@ namespace sm
 		Entity(void);
 		virtual ~Entity(void);
 
-		void addChild(Entity *);
+		void addChild(const boost::shared_ptr<Entity>&);
 		void clearChildren(void);
 
 		/* IMutable and Drawable interfaces */

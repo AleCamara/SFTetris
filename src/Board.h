@@ -17,6 +17,9 @@ namespace sm
 		void deactivateBlock(const unsigned int, const unsigned int);
 		void resetBlocks(void);
 
+		unsigned int getNumRows(void) const { return mSizeI; }
+		unsigned int getNumColumns(void) const {return mSizeJ; }
+
 		bool checkBoardPosition(const unsigned int, const unsigned int) const;
 
 		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;

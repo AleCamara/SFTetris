@@ -1,15 +1,34 @@
 #pragma once
 
+#include <SFML\System\Clock.hpp>
+#include <SFML\System\Time.hpp>
 #include "State.h"
 
 namespace sm
 {
+	class Board;
+	class Piece;
+
 	class MenuStage: public State
 	{
 	public:
-		MenuStage(void) {}
+		MenuStage(void);
 		virtual ~MenuStage(void) {}
 
 		virtual void init(void);
+		virtual void update(void);
+
+	private:
+		static const sf::Time TickingTimes[5];
+
+		sf::Clock mClock;
+		sf::Time mTime;
+		unsigned int mTimeScale;
+		
+		boost::shared_ptr<Board> mBoard;
+		boost::shared_ptr<Board> mPreviewBoard;
+		boost::shared_ptr<Piece> mCurrentPiece;
+		boost::shared_ptr<Piece> mNextPiece;
+
 	};
 }

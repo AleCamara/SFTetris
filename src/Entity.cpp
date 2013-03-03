@@ -7,7 +7,7 @@ namespace sm
 	Entity::Entity(void): mChildren() {}
 	Entity::~Entity(void) {}
 
-	void Entity::addChild(Entity *child)
+	void Entity::addChild(const boost::shared_ptr<Entity>& child)
 	{
 		mChildren.push_back(boost::shared_ptr<Entity>(child));
 	}
@@ -27,6 +27,7 @@ namespace sm
 
 	void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
+		states.transform *= getTransform();
 		ChildrenContainerType::const_iterator iter = mChildren.cbegin();
 		for(; iter != mChildren.cend(); iter++)
 		{

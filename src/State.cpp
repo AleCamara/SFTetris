@@ -14,9 +14,9 @@ namespace sm
 
 	State::~State(void)	{}
 
-	void State::addEntity(Entity *entity)
+	void State::addEntity(const boost::shared_ptr<Entity>& entity)
 	{
-		mEntity->addChild(entity);
+		mEntity->addChild(boost::shared_ptr<Entity>(entity));
 	}
 	void State::clearEntities(void)
 	{

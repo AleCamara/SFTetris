@@ -9,17 +9,17 @@ namespace sm
 	const float Block::SIZE = 15.f;
 	const float Block::PADDING = 2.f;
 
-	const sf::Color Block::sColorArray[Block::BlockColor::CountAll] = {sf::Color::Blue,
-		                                                               sf::Color::Magenta,
-											                           sf::Color::Green,
-											                           sf::Color::Yellow,
-	   														   		   sf::Color::Red,
-											                           sf::Color(0x40, 0x40, 0x40, 255)};
+	const sf::Color Block::sColorArray[Block::BlockColor::Count] = {sf::Color::Blue,
+		                                                            sf::Color::Magenta,
+											                        sf::Color::Green,
+											                        sf::Color::Yellow,
+	   														   	    sf::Color::Red,
+											                        sf::Color(0x40, 0x40, 0x40, 255)};
 	
 	Block::Block(void): mActive(false), mRectangle(sf::Vector2f(SIZE, SIZE))
 	{
 		mColor = getRandomColor();
-		activate();
+		deactivate();
 	}
 
 	Block::~Block(void)	{}
@@ -33,7 +33,7 @@ namespace sm
 	void Block::deactivate(void)
 	{
 		mActive = false;
-		mRectangle.setFillColor(sColorArray[BlockColor::CountAll-1]);
+		mRectangle.setFillColor(sColorArray[Grey]);
 	}
 
 	void Block::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -48,7 +48,7 @@ namespace sm
 	{
 		BlockColor out = Blue;
 
-		switch(int(rand() % Block::BlockColor::Count))
+		switch(int(rand() % (Block::BlockColor::Count-1)))
 		{
 		case 1:
 			out = Magenta;

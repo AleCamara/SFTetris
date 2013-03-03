@@ -23,17 +23,16 @@ namespace sm
 
 	private:
 		enum BlockColor {
-			GREY = -1,
 			Blue = 0,
 			Magenta,
 			Green,
 			Yellow,
 			Red,
-			Count,
-			CountAll
+			Grey,
+			Count
 		};
 		
-		static const sf::Color sColorArray[BlockColor::CountAll];
+		static const sf::Color sColorArray[BlockColor::Count];
 
 		BlockColor mColor;
 		bool mActive;

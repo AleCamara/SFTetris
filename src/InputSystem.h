@@ -30,13 +30,13 @@ namespace sm
 		{
 			Pressed,
 			Released,
-			Count
+			KeyEventStateCount
 		};
 
 		typedef std::vector<sf::Event> EventContainer;
 		
 		EventContainer mEvents;
-		bool mKey[KeyEventState::Count][Key::KeyCount];
+		bool mKey[KeyEventStateCount][sf::Keyboard::KeyCount];
 
 		void resetKeys(void);
 	};

@@ -48,13 +48,13 @@ namespace sm
 			// key pressed event
 			if(ev.type == sf::Event::KeyPressed)
 			{
-				mKey[KeyEventState::Pressed][ev.key.code] = true;
+				mKey[Pressed][ev.key.code] = true;
 			}
 
 			// key released event
 			if(ev.type == sf::Event::KeyReleased)
 			{
-				mKey[KeyEventState::Released][ev.key.code] = true;
+				mKey[Released][ev.key.code] = true;
 			}
 		}
 	}
@@ -66,19 +66,19 @@ namespace sm
 
 	bool InputSystem::isKeyPressed(Key key) const
 	{
-		return mKey[KeyEventState::Pressed][key];
+		return mKey[Pressed][key];
 	}
 
 	bool InputSystem::isKeyReleased(Key key) const
 	{
-		return mKey[KeyEventState::Released][key];
+		return mKey[Released][key];
 	}
 
 	void InputSystem::resetKeys(void)
 	{
 		for(int state=0; state<2; ++state)
 		{
-			for(int key=0; key<Key::KeyCount; ++key)
+			for(int key=0; key<sf::Keyboard::KeyCount; ++key)
 			{
 				mKey[state][key] = false;
 			}

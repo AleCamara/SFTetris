@@ -38,15 +38,15 @@ namespace sm
 		{
 			if(Game::instance()->getInput()->isKeyPressed(InputSystem::Key::Right))
 			{
-				movePrivate(Right);
+				movePrivate(MoveRight);
 			}
 			if(Game::instance()->getInput()->isKeyPressed(InputSystem::Key::Left))
 			{
-				movePrivate(Left);
+				movePrivate(MoveLeft);
 			}
 			if(Game::instance()->getInput()->isKeyPressed(InputSystem::Key::Down))
 			{
-				movePrivate(Down);
+				movePrivate(MoveDown);
 			}
 			if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::A))
 			{
@@ -61,20 +61,20 @@ namespace sm
 
 	void Piece::updatePrivate(void)
 	{
-		if(hit())
+		if(movePrivate(MoveDown))
 		{
 			Game::instance()->getLogger()->getBuffer() << "Piece is stuck!";
 			Game::instance()->getLogger()->debug(5);
 			mStuck = true;
 			return;
 		}
-
-		movePrivate(Down);
 	}
 
-	void Piece::movePrivate(Direction dir)
+	bool Piece::movePrivate(Direction dir)
 	{
-		if(!hit(dir))
+		bool out = hitOnMove(dir);
+
+		if(!out)
 		{
 			turnOff();
 
@@ -85,27 +85,28 @@ namespace sm
 
 			turnOn();
 		}
+
+		return out;
 	}
 
-	void Piece::rotatePrivate(Rotation rot)
+	bool Piece::rotatePrivate(Rotation rot)
 	{
-		int dRot = +1;
-		if(rot == CCW)
+		bool out = hitOnRotate(rot);
+
+		if(!out)
 		{
-			dRot = -1;
+			int dRot;
+			getRotationVariation(rot, dRot);
+
+			turnOff();
+			mRotation = (mRotation + dRot) % RotationCount;
+			turnOn();
 		}
 
-		turnOff();
-		mRotation = (mRotation + dRot) % RotationCount;
-		turnOn();
+		return out;
 	}
 
-	bool Piece::hit(void) const
-	{
-		return hit(Down);
-	}
-
-	bool Piece::hit(Direction dir) const
+	bool Piece::hitOnMove(Direction dir) const
 	{
 		bool out = false;
 
@@ -124,10 +125,52 @@ namespace sm
 			column = mColumn + BlockColumn[mType][mRotation][k] + dColumn;
 
 			// hit a wall
-			if((dir == Up && row < 0) || 
-			   (dir == Down && row >= mBoard->getNumRows()) || 
-			   (dir == Left && column < 0) ||
-			   (dir == Right && column >= mBoard->getNumColumns()))
+			if((dir == MoveUp && row < 0) || 
+			   (dir == MoveDown && row >= mBoard->getNumRows()) || 
+			   (dir == MoveLeft && column < 0) ||
+			   (dir == MoveRight && column >= mBoard->getNumColumns()))
+			{
+				out = true;
+				break;
+			}
+
+			// hit another piece
+			// note that row and column are valid board indices
+			if(mBoard->checkBoardPosition(row, column))
+			{
+				out = true;
+				break;
+			}
+		}
+
+		// activate blocks
+		turnOn();
+
+		return out;
+	}
+
+	bool Piece::hitOnRotate(Rotation rot) const
+	{
+		bool out = false;
+
+		// displacement
+		int dRot = 0;
+		getRotationVariation(rot, dRot);
+		unsigned int newRot = (mRotation + dRot) % RotationCount;
+
+		// deactivate current piece
+		turnOff();
+
+		// check hit
+		int row = 0, column = 0;
+		for(int k=0; k<mNumBlocks; ++k)
+		{
+			row = mRow + BlockRow[mType][newRot][k];
+			column = mColumn + BlockColumn[mType][newRot][k];
+
+			// hit a wall
+			if(row < 0 || row >= mBoard->getNumRows() || 
+			   column < 0 || column >= mBoard->getNumColumns())
 			{
 				out = true;
 				break;
@@ -189,24 +232,33 @@ namespace sm
 		dColumn = 0;
 		switch(dir)
 		{
-		case Down:
+		case MoveDown:
 			dRow = +1;
 			break;
-		case Up:
+		case MoveUp:
 			dRow = -1;
 			break;
-		case Left:
+		case MoveLeft:
 			dColumn = -1;
 			break;
-		case Right:
+		case MoveRight:
 			dColumn = +1;
 			break;
 		}
 	}
 
+	void Piece::getRotationVariation(Rotation rot, int& dRot) const
+	{
+		dRot = +1;
+		if(rot == CCW)
+		{
+			dRot = -1;
+		}
+	}
+
 	Piece::Type Piece::getRandomType(void) const
 	{
-		return convertIntToType(Game::instance()->getMath()->getRandomInteger() % Type::Count);
+		return convertIntToType(Game::instance()->getMath()->getRandomInteger() % PieceCount);
 	}
 
 	Piece::Type Piece::convertIntToType(int typeInt) const
@@ -243,7 +295,7 @@ namespace sm
 		return Game::instance()->getMath()->getRandomInteger() % RotationCount;
 	}
 
-	const int Piece::BlockColumn[Type::Count][4][5]
+	const int Piece::BlockColumn[PieceCount][RotationCount][5]
 			= {
 				// Bar
 				{
@@ -295,7 +347,7 @@ namespace sm
 				  { 0,  0,  0,  1, 0}
 				}
 			  };
-	const int Piece::BlockRow[Type::Count][4][5]
+	const int Piece::BlockRow[PieceCount][RotationCount][5]
 			= {
 				// Bar
 				{

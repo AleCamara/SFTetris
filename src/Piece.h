@@ -20,7 +20,7 @@ namespace sm
 			NailR,
 			NailL,
 			T,
-			Count
+			PieceCount
 		};
 
 		// create a random piece at given board position
@@ -40,10 +40,10 @@ namespace sm
 	private:
 		enum Direction
 		{
-			Down,
-			Left,
-			Right,
-			Up
+			MoveDown,
+			MoveLeft,
+			MoveRight,
+			MoveUp
 		};
 
 		enum Rotation
@@ -61,18 +61,19 @@ namespace sm
 		Block::BlockColor mColors[5];
 	
 		static const int RotationCount = 4;
-		static const int BlockRow[Type::Count][RotationCount][5];
-		static const int BlockColumn[Type::Count][RotationCount][5];
+		static const int BlockRow[PieceCount][RotationCount][5];
+		static const int BlockColumn[PieceCount][RotationCount][5];
 		
 		void updatePrivate(void);
-		void movePrivate(Direction);
-		void rotatePrivate(Rotation);
-		bool hit(void) const;
-		bool hit(Direction) const;
+		bool movePrivate(Direction);
+		bool rotatePrivate(Rotation);
+		bool hitOnMove(Direction) const;
+		bool hitOnRotate(Rotation) const;
 		void turnOn(void) const;
 		void turnOff(void) const;
 		void setNumBlocks(void);
 		void getMovementVariations(Direction, int&, int&) const;
+		void getRotationVariation(Rotation, int&) const;
 		Type getRandomType(void) const;
 		Type convertIntToType(int) const;
 		unsigned int getRandomRotation(void) const;

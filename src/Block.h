@@ -17,7 +17,7 @@ namespace sm
 			Yellow,
 			Red,
 			Grey,
-			Count
+			BlockColorCount
 		};
 
 		static const float SIZE;
@@ -38,7 +38,7 @@ namespace sm
 		BlockColor getColor(void) const { return mColor; }
 		
 	private:
-		static const sf::Color sColorArray[BlockColor::Count];
+		static const sf::Color sColorArray[BlockColorCount];
 		
 		static BlockColor convertIntToColor(int);
 

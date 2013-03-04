@@ -8,12 +8,12 @@ namespace sm
 	const float Block::SIZE = 15.f;
 	const float Block::PADDING = 2.f;
 
-	const sf::Color Block::sColorArray[Block::BlockColor::Count] = {sf::Color::Blue,
-		                                                            sf::Color::Magenta,
-											                        sf::Color::Green,
-											                        sf::Color::Yellow,
-	   														   	    sf::Color::Red,
-											                        sf::Color(0x40, 0x40, 0x40, 255)};
+	const sf::Color Block::sColorArray[BlockColorCount] = {sf::Color::Blue,
+		                                                   sf::Color::Magenta,
+											               sf::Color::Green,
+											               sf::Color::Yellow,
+	   													   sf::Color::Red,
+											               sf::Color(0x40, 0x40, 0x40, 255)};
 	
 	Block::Block(void): mActive(false), mRectangle(sf::Vector2f(SIZE, SIZE))
 	{
@@ -46,7 +46,7 @@ namespace sm
 	Block::BlockColor Block::getRandomColor(void)
 	{
 		return convertIntToColor(Game::instance()->getMath()->getRandomInteger()
-			% (Block::BlockColor::Count-1));
+			% (BlockColorCount-1));
 	}
 
 	Block::BlockColor Block::convertIntToColor(int colorInt)

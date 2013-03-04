@@ -36,6 +36,7 @@ namespace sm
 		int getColumn(void) const { return mColumn; }
 
 		bool isStuck(void) const { return mStuck; }
+		bool collides(void) const;
 
 		virtual void update(void);
 
@@ -45,7 +46,8 @@ namespace sm
 			MoveDown,
 			MoveLeft,
 			MoveRight,
-			MoveUp
+			MoveUp,
+			NoMove
 		};
 
 		enum Rotation

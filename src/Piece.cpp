@@ -23,6 +23,11 @@ namespace sm
 		mBoard = board;
 	}
 
+	bool Piece::collides(void) const
+	{
+		return hitOnMove(MoveDown);
+	}
+
 	void Piece::update(void)
 	{
 		Game::ActionContainer::const_iterator iter = Game::instance()->getActions().cbegin();

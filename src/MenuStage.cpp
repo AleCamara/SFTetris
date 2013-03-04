@@ -52,11 +52,11 @@ namespace sm
 			Game::instance()->getMath()->restartTimer(mClock);
 		}
 
-		if(mCurrentPiece && !mCurrentPiece->isStuck())
+		if(!mCurrentPiece->isStuck())
 		{
 			mCurrentPiece->update();
 		}
-		else if(mCurrentPiece->isStuck())
+		else
 		{
 			// prepare preview piece to be a current piece
 			mCurrentPiece = mNextPiece;
@@ -67,6 +67,13 @@ namespace sm
 			// create a new preview piece
 			mPreviewBoard->resetBlocks();
 			mNextPiece.reset(new Piece(mPreviewBoard, 2, 2));
+
+			// check for game over
+			if(mCurrentPiece->collides())
+			{
+				Game::instance()->getLogger()->getBuffer() << "GAME OVER!";
+				Game::instance()->getLogger()->debug(5);
+			}
 		}
 
 		State::update();

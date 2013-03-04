@@ -32,6 +32,31 @@ namespace sm
 				break;
 			}
 		}
+
+		// move with player input
+		if(!mStuck)
+		{
+			if(Game::instance()->getInput()->isKeyPressed(InputSystem::Key::Right))
+			{
+				movePrivate(Right);
+			}
+			if(Game::instance()->getInput()->isKeyPressed(InputSystem::Key::Left))
+			{
+				movePrivate(Left);
+			}
+			if(Game::instance()->getInput()->isKeyPressed(InputSystem::Key::Down))
+			{
+				movePrivate(Down);
+			}
+			if(Game::instance()->getInput()->isKeyPressed(InputSystem::Key::A))
+			{
+				rotatePrivate(CCW);
+			}
+			if(Game::instance()->getInput()->isKeyPressed(InputSystem::Key::S))
+			{
+				rotatePrivate(CW);
+			}
+		}
 	}
 
 	void Piece::updatePrivate(void)
@@ -44,26 +69,35 @@ namespace sm
 			return;
 		}
 
-		// deactivate
-		int row, column;
-		for(int k=0; k<mNumBlocks; ++k)
+		movePrivate(Down);
+	}
+
+	void Piece::movePrivate(Direction dir)
+	{
+		if(!hit(dir))
 		{
-			row = mRow + BlockRow[mType][mRotation][k];
-			column = mColumn + BlockColumn[mType][mRotation][k];
-			mBoard->deactivateBlock(row, column);
+			turnOff();
+
+			int dRow, dColumn;
+			getMovementVariations(dir, dRow, dColumn);
+			setRow(getRow() + dRow);
+			setColumn(getColumn() + dColumn);
+
+			turnOn();
+		}
+	}
+
+	void Piece::rotatePrivate(Rotation rot)
+	{
+		int dRot = +1;
+		if(rot == CCW)
+		{
+			dRot = -1;
 		}
 
-		// move down
-		mRow++;
-
-		// change colors and activate
-		for(int k=0; k<mNumBlocks; ++k)
-		{
-			row = mRow + BlockRow[mType][mRotation][k];
-			column = mColumn + BlockColumn[mType][mRotation][k];
-			mBoard->changeBlockColor(row, column, mColors[k]);
-			mBoard->activateBlock(row, column);
-		}
+		turnOff();
+		mRotation = (mRotation + dRot) % RotationCount;
+		turnOn();
 	}
 
 	bool Piece::hit(void) const
@@ -77,21 +111,7 @@ namespace sm
 
 		// displacement
 		int dRow = 0, dColumn = 0;
-		switch(dir)
-		{
-		case Down:
-			dRow = +1;
-			break;
-		case Up:
-			dRow = -1;
-			break;
-		case Left:
-			dColumn = -1;
-			break;
-		case Right:
-			dColumn = +1;
-			break;
-		}
+		getMovementVariations(dir, dRow, dColumn);
 
 		// deactivate current piece
 		turnOff();
@@ -135,6 +155,7 @@ namespace sm
 		{
 			row = mRow + BlockRow[mType][mRotation][k];
 			column = mColumn + BlockColumn[mType][mRotation][k];
+			mBoard->changeBlockColor(row, column, mColors[k]);
 			mBoard->activateBlock(row, column);
 		}
 	}
@@ -159,6 +180,27 @@ namespace sm
 		else
 		{
 			mNumBlocks = 4;
+		}
+	}
+
+	void Piece::getMovementVariations(Direction dir, int& dRow, int& dColumn) const
+	{
+		dRow = 0;
+		dColumn = 0;
+		switch(dir)
+		{
+		case Down:
+			dRow = +1;
+			break;
+		case Up:
+			dRow = -1;
+			break;
+		case Left:
+			dColumn = -1;
+			break;
+		case Right:
+			dColumn = +1;
+			break;
 		}
 	}
 

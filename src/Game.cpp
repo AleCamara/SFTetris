@@ -19,14 +19,18 @@ namespace sm
 		setFramerateLimit(FRAMERATE);
 
 		mMath = boost::shared_ptr<MathSystem>(new MathSystem());
-		mMath->init();
+		mInput = boost::shared_ptr<InputSystem>(new InputSystem());
 	}
 
 	Game::~Game(void)
 	{
-		if(mMath.get())
+		if(mMath)
 		{
 			mMath->quit();
+		}
+		if(mInput)
+		{
+			mInput->quit();
 		}
 	}
 
@@ -47,6 +51,11 @@ namespace sm
 			stage->init();
 			mStage.swap(stage);
 		}
+	}
+
+	boost::shared_ptr<InputSystem> Game::getInput(void)
+	{
+		return mInput;
 	}
 
 	boost::shared_ptr<MathSystem> Game::getMath(void)
@@ -76,9 +85,11 @@ namespace sm
 
 	void Game::loop(void)
 	{
+		mMath->init();
+		mInput->init();
+
 		while(isOpen())
 		{
-			
 			sf::Event ev;
 			while (pollEvent(ev))
 			{

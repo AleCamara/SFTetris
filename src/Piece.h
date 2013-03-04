@@ -46,6 +46,12 @@ namespace sm
 			Up
 		};
 
+		enum Rotation
+		{
+			CW,
+			CCW
+		};
+
 		Type mType;
 		unsigned int mNumBlocks;
 		unsigned int mRotation;
@@ -59,11 +65,14 @@ namespace sm
 		static const int BlockColumn[Type::Count][RotationCount][5];
 		
 		void updatePrivate(void);
+		void movePrivate(Direction);
+		void rotatePrivate(Rotation);
 		bool hit(void) const;
 		bool hit(Direction) const;
 		void turnOn(void) const;
 		void turnOff(void) const;
 		void setNumBlocks(void);
+		void getMovementVariations(Direction, int&, int&) const;
 		Type getRandomType(void) const;
 		Type convertIntToType(int) const;
 		unsigned int getRandomRotation(void) const;

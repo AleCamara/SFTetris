@@ -8,6 +8,7 @@
 #include "State.h"
 #include "Logger.h"
 #include "MathSystem.h"
+#include "InputSystem.h"
 #include "Action.h"
 
 namespace sm
@@ -23,6 +24,7 @@ namespace sm
 
 		void setStage(boost::shared_ptr<State>);
 
+		boost::shared_ptr<InputSystem> getInput(void);
 		boost::shared_ptr<MathSystem> getMath(void);
 		boost::shared_ptr<Logger> getLogger(void);
 
@@ -44,6 +46,7 @@ namespace sm
 		boost::shared_ptr<State> mStage;
 		boost::shared_ptr<Logger> mLogger;
 		boost::shared_ptr<MathSystem> mMath;
+		boost::shared_ptr<InputSystem> mInput;
 		ActionContainer mActions;
 		sf::Clock mDeltaClock;
 		sf::Time mDeltaTime;

@@ -54,17 +54,17 @@ namespace sm
 			CCW
 		};
 
+		static const int sNumBlocks = 4;
+		static const int sRotationCount = 4;
+		static const int BlockRow[PieceCount][sRotationCount][sNumBlocks];
+		static const int BlockColumn[PieceCount][sRotationCount][sNumBlocks];
+
 		Type mType;
-		unsigned int mNumBlocks;
 		unsigned int mRotation;
 		int mColumn, mRow;
 		boost::shared_ptr<Board> mBoard;
 		bool mStuck;
-		Block::BlockColor mColors[5];
-	
-		static const int RotationCount = 4;
-		static const int BlockRow[PieceCount][RotationCount][5];
-		static const int BlockColumn[PieceCount][RotationCount][5];
+		Block::BlockColor mColors[sNumBlocks];
 		
 		void updatePrivate(void);
 		bool movePrivate(Direction);
@@ -73,7 +73,6 @@ namespace sm
 		bool hitOnRotate(Rotation) const;
 		void turnOn(void) const;
 		void turnOff(void) const;
-		void setNumBlocks(void);
 		void getMovementVariations(Direction, int&, int&) const;
 		void getRotationVariation(Rotation, int&) const;
 		Type getRandomType(void) const;

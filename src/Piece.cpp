@@ -11,8 +11,7 @@ namespace sm
 	{
 		mType = getRandomType();
 		mRotation = getRandomRotation();
-		setNumBlocks();
-		for(int k=0; k<mNumBlocks; ++k)
+		for(int k=0; k<sNumBlocks; ++k)
 		{
 			mColors[k] = Block::getRandomColor();
 		}
@@ -104,7 +103,7 @@ namespace sm
 			getRotationVariation(rot, dRot);
 
 			turnOff();
-			mRotation = (mRotation + dRot) % RotationCount;
+			mRotation = (mRotation + dRot) % sRotationCount;
 			turnOn();
 		}
 
@@ -124,7 +123,7 @@ namespace sm
 
 		// check hit
 		int row = 0, column = 0;
-		for(int k=0; k<mNumBlocks; ++k)
+		for(int k=0; k<sNumBlocks; ++k)
 		{
 			row = mRow + BlockRow[mType][mRotation][k] + dRow;
 			column = mColumn + BlockColumn[mType][mRotation][k] + dColumn;
@@ -161,14 +160,14 @@ namespace sm
 		// displacement
 		int dRot = 0;
 		getRotationVariation(rot, dRot);
-		unsigned int newRot = (mRotation + dRot) % RotationCount;
+		unsigned int newRot = (mRotation + dRot) % sRotationCount;
 
 		// deactivate current piece
 		turnOff();
 
 		// check hit
 		int row = 0, column = 0;
-		for(int k=0; k<mNumBlocks; ++k)
+		for(int k=0; k<sNumBlocks; ++k)
 		{
 			row = mRow + BlockRow[mType][newRot][k];
 			column = mColumn + BlockColumn[mType][newRot][k];
@@ -199,7 +198,7 @@ namespace sm
 	void Piece::turnOn(void) const
 	{
 		int row = 0, column = 0;
-		for(int k=0; k<mNumBlocks; ++k)
+		for(int k=0; k<sNumBlocks; ++k)
 		{
 			row = mRow + BlockRow[mType][mRotation][k];
 			column = mColumn + BlockColumn[mType][mRotation][k];
@@ -211,23 +210,11 @@ namespace sm
 	void Piece::turnOff(void) const
 	{
 		int row = 0, column = 0;
-		for(int k=0; k<mNumBlocks; ++k)
+		for(int k=0; k<sNumBlocks; ++k)
 		{
 			row = mRow + BlockRow[mType][mRotation][k];
 			column = mColumn + BlockColumn[mType][mRotation][k];
 			mBoard->deactivateBlock(row, column);
-		}
-	}
-
-	void Piece::setNumBlocks(void)
-	{
-		if(mType == SnakeR || mType == SnakeL)
-		{
-			mNumBlocks = 5;
-		}
-		else
-		{
-			mNumBlocks = 4;
 		}
 	}
 
@@ -297,111 +284,111 @@ namespace sm
 
 	unsigned int Piece::getRandomRotation(void) const
 	{
-		return Game::instance()->getMath()->getRandomInteger() % RotationCount;
+		return Game::instance()->getMath()->getRandomInteger() % sRotationCount;
 	}
 
-	const int Piece::BlockColumn[PieceCount][RotationCount][5]
+	const int Piece::BlockColumn[PieceCount][sRotationCount][sNumBlocks]
 			= {
 				// Bar
 				{
-				  { 0,  0,  0,  0, 0},
-				  { 1,  0, -1, -2, 0},
-				  { 0,  0,  0,  0, 0},
-				  {-1,  0,  1,  2, 0}
+				  { 0,  0,  0,  0},
+				  { 1,  0, -1, -2},
+				  { 0,  0,  0,  0},
+				  {-1,  0,  1,  2}
 				},
 				// Square
 				{
-				  { 0,  1,  1,  0, 0},
-				  { 0,  0, -1, -1, 0},
-				  { 0, -1, -1,  0, 0},
-				  { 0,  0,  1,  1, 0}
+				  { 0,  1,  1,  0},
+				  { 0,  0, -1, -1},
+				  { 0, -1, -1,  0},
+				  { 0,  0,  1,  1}
 				},
 				// SnakeR
 				{
-				  { 1,  0, 0,  0, -1},
-				  { 1,  1, 0, -1, -1},
-				  {-1,  0, 0,  0,  1},
-				  {-1, -1, 0,  1,  1}
+				  { 1, 0,  0, -1},
+				  { 0, 0, -1, -1},
+				  {-1, 0,  0,  1},
+				  { 0, 0,  1,  1}
 				},
 				// SnakeL
 				{
-				  {-1,  0, 0,  0,  1},
-				  { 1,  1, 0, -1, -1},
-				  { 1,  0, 0,  0, -1},
-				  {-1, -1, 0,  1,  1}
+				  {-1, 0,  0,  1},
+				  { 0, 0, -1, -1},
+				  { 1, 0,  0, -1},
+				  { 0, 0,  1,  1}
 				},
 				// NailR
 				{
-				  { 1,  0,  0,  0, 0},
-				  { 1,  1,  0, -1, 0},
-				  {-1,  0,  0,  0, 0},
-				  {-1, -1,  0,  1, 0}
+				  { 1,  0,  0,  0},
+				  { 1,  1,  0, -1},
+				  {-1,  0,  0,  0},
+				  {-1, -1,  0,  1}
 				},
 				// NailL
 				{
-				  {-1,  0, 0,  0, 0},
-				  { 1,  1, 0, -1, 0},
-				  { 1,  0, 0,  0, 0},
-				  {-1, -1, 0,  1, 0}
+				  {-1,  0, 0,  0},
+				  { 1,  1, 0, -1},
+				  { 1,  0, 0,  0},
+				  {-1, -1, 0,  1}
 				},
 				// T
 				{
-				  {-1,  0,  1,  0, 0},
-				  { 0,  0,  0, -1, 0},
-				  { 1,  0, -1,  0, 0},
-				  { 0,  0,  0,  1, 0}
+				  {-1,  0,  1,  0},
+				  { 0,  0,  0, -1},
+				  { 1,  0, -1,  0},
+				  { 0,  0,  0,  1}
 				}
 			  };
-	const int Piece::BlockRow[PieceCount][RotationCount][5]
+	const int Piece::BlockRow[PieceCount][sRotationCount][sNumBlocks]
 			= {
 				// Bar
 				{
-				  {-1,  0,  1,  2, 0},
-				  { 0,  0,  0,  0, 0},
-				  { 1,  0, -1, -2, 0},
-				  { 0,  0,  0,  0, 0}
+				  {-1,  0,  1,  2},
+				  { 0,  0,  0,  0},
+				  { 1,  0, -1, -2},
+				  { 0,  0,  0,  0}
 				},
 				// Square
 				{
-				  { 0,  0,  1,  1, 0},
-				  { 0,  1,  1,  0, 0},
-				  { 0,  0, -1, -1, 0},
-				  { 0, -1, -1,  0, 0}
+				  { 0,  0,  1,  1},
+				  { 0,  1,  1,  0},
+				  { 0,  0, -1, -1},
+				  { 0, -1, -1,  0}
 				},
 				// SnakeR
 				{
-				  {-1, -1, 0,  1,  1},
-				  { 1,  0, 0,  0, -1},
-				  { 1,  1, 0, -1, -1},
-				  {-1,  0, 0,  0,  1}
+				  { 0, 0,  1,  1},
+				  { 1, 0,  0, -1},
+				  { 0, 0, -1, -1},
+				  {-1, 0,  0,  1}
 				},
 				// SnakeL
 				{
-				  {-1, -1, 0,  1,  1},
-				  {-1,  0, 0,  0,  1},
-				  { 1,  1, 0, -1, -1},
-				  { 1,  0, 0,  0, -1}
+				  { 0, 0,  1,  1},
+				  {-1, 0,  0,  1},
+				  { 0, 0, -1, -1},
+				  { 1, 0,  0, -1}
 				},
 				// NailR
 				{
-				  {-1, -1, 0,  1, 0},
-				  { 1,  0, 0,  0, 0},
-				  { 1,  1, 0, -1, 0},
-				  {-1,  0, 0,  0, 0}
+				  {-1, -1, 0,  1},
+				  { 1,  0, 0,  0},
+				  { 1,  1, 0, -1},
+				  {-1,  0, 0,  0}
 				},
 				// NailL
 				{
-				  {-1, -1, 0,  1, 0},
-				  {-1,  0, 0,  0, 0},
-				  { 1,  1, 0, -1, 0},
-				  { 1,  0, 0,  0, 0}
+				  {-1, -1, 0,  1},
+				  {-1,  0, 0,  0},
+				  { 1,  1, 0, -1},
+				  { 1,  0, 0,  0}
 				},
 				// T
 				{
-				  { 0, 0,  0,  1, 0},
-				  {-1, 0,  1,  0, 0},
-				  { 0, 0,  0, -1, 0},
-				  { 1, 0, -1,  0, 0}
+				  { 0, 0,  0,  1},
+				  {-1, 0,  1,  0},
+				  { 0, 0,  0, -1},
+				  { 1, 0, -1,  0}
 				}
 			  };
 }

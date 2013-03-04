@@ -33,6 +33,7 @@ namespace sm
 
 		sf::Time getDeltaTime(void) const;
 
+		void init(void);
 		void loop(void);
 
 	private:

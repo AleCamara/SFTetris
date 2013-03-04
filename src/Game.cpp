@@ -83,11 +83,14 @@ namespace sm
 		return mDeltaTime;
 	}
 
-	void Game::loop(void)
+	void Game::init(void)
 	{
 		mMath->init();
 		mInput->init();
+	}
 
+	void Game::loop(void)
+	{
 		while(isOpen())
 		{
 			sf::Event ev;

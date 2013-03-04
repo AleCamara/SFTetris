@@ -97,9 +97,6 @@ namespace sm
 				getMath()->update();
 				getInput()->update();
 			}
-
-			// input all events
-			getInput()->getEvents();
 			
 			clear(sf::Color(0x20, 0x20, 0x20, 255));
 			if(!mPaused && mStage)
@@ -110,7 +107,6 @@ namespace sm
 			display();
 
 			mActions.clear();
-			getInput()->clearEvents();
 
 			mDeltaTime = mDeltaClock.restart();
 		}

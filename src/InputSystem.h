@@ -39,5 +39,7 @@ namespace sm
 		bool mKey[KeyEventStateCount][sf::Keyboard::KeyCount];
 
 		void resetKeys(void);
+		void InputSystem::resetReleased(void);
+		void InputSystem::resetPressed(void);
 	};
 }

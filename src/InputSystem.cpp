@@ -6,6 +6,7 @@ namespace sm
 {
 	InputSystem::InputSystem(void): mEvents()
 	{
+		resetKeys();
 	}
 
 	void InputSystem::init(void)
@@ -15,14 +16,8 @@ namespace sm
 
 	void InputSystem::update(void)
 	{
-	}
+		resetReleased();
 
-	void InputSystem::quit(void)
-	{
-	}
-
-	void InputSystem::getEvents(void)
-	{
 		sf::Event ev;
 		while(Game::instance()->pollEvent(ev))
 		{
@@ -54,9 +49,14 @@ namespace sm
 			// key released event
 			if(ev.type == sf::Event::KeyReleased)
 			{
+				mKey[Pressed][ev.key.code] = false;
 				mKey[Released][ev.key.code] = true;
 			}
 		}
+	}
+	
+	void InputSystem::quit(void)
+	{
 	}
 
 	void InputSystem::clearEvents(void)
@@ -76,12 +76,22 @@ namespace sm
 
 	void InputSystem::resetKeys(void)
 	{
-		for(int state=0; state<2; ++state)
+		resetReleased();
+		resetPressed();
+	}
+
+	void InputSystem::resetReleased(void)
+	{
+		for(int key=0; key<sf::Keyboard::KeyCount; ++key)
 		{
-			for(int key=0; key<sf::Keyboard::KeyCount; ++key)
-			{
-				mKey[state][key] = false;
-			}
+			mKey[Released][key] = false;
+		}
+	}
+	void InputSystem::resetPressed(void)
+	{
+		for(int key=0; key<sf::Keyboard::KeyCount; ++key)
+		{
+			mKey[Pressed][key] = false;
 		}
 	}
 }

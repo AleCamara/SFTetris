@@ -1,6 +1,5 @@
 #pragma once
 
-#include <SFML\System\Clock.hpp>
 #include <SFML\System\Time.hpp>
 #include "State.h"
 
@@ -21,7 +20,7 @@ namespace sm
 	private:
 		static const sf::Time TickingTimes[5];
 
-		sf::Clock mClock;
+		unsigned int mClock;
 		sf::Time mTime;
 		unsigned int mTimeScale;
 		

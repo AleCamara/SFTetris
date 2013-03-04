@@ -22,7 +22,7 @@ namespace sm
 
 	void MenuStage::init(void)
 	{
-		mClock.restart();
+		mClock = Game::instance()->getMath()->createTimer();
 
 		Game::instance()->getLogger()->getBuffer() << "MenuStage::init(void) called";
 		Game::instance()->getLogger()->debug(5);
@@ -42,12 +42,14 @@ namespace sm
 
 	void MenuStage::update(void)
 	{
-		if(mClock.getElapsedTime() > mTime)
+		if(Game::instance()->getMath()->getTimeOfTimer(mClock) > mTime)
 		{
 			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("tick")));
 			
-			mTime = TickingTimes[mTimeScale] - (mClock.getElapsedTime() - mTime);
-			mClock.restart();
+			mTime = TickingTimes[mTimeScale] 
+				- (Game::instance()->getMath()->getTimeOfTimer(mClock) - mTime);
+			
+			Game::instance()->getMath()->restartTimer(mClock);
 		}
 
 		if(mCurrentPiece)

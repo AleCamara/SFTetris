@@ -13,6 +13,10 @@ namespace sm
 		Game::instance()->setKeyRepeatEnabled(false);
 	}
 
+	void InputSystem::update(void)
+	{
+	}
+
 	void InputSystem::quit(void)
 	{
 	}

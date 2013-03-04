@@ -16,6 +16,7 @@ namespace sm
 		virtual ~InputSystem(void) {}
 
 		virtual void init(void);
+		virtual void update(void);
 		virtual void quit(void);
 
 		void getEvents(void);

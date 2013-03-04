@@ -91,6 +91,14 @@ namespace sm
 	{
 		while(isOpen())
 		{
+			// system updates
+			if(!mPaused)
+			{
+				getMath()->update();
+				getInput()->update();
+			}
+
+			// input all events
 			getInput()->getEvents();
 			
 			clear(sf::Color(0x20, 0x20, 0x20, 255));

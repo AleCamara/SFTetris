@@ -36,6 +36,9 @@ namespace sm
 		void init(void);
 		void loop(void);
 
+		void pause(void);
+		void unpause(void);
+
 	private:
 		static boost::shared_ptr<Game> sInstance;
 
@@ -51,6 +54,7 @@ namespace sm
 		ActionContainer mActions;
 		sf::Clock mDeltaClock;
 		sf::Time mDeltaTime;
+		bool mPaused;
 
 		Game(void);
 		Game(const Game&) {}

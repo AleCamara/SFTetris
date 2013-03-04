@@ -12,7 +12,7 @@ namespace sm
 	const unsigned int Game::STYLE = sf::Style::Titlebar | sf::Style::Close;
 
 	Game::Game(void): RenderWindow(VIDEO_MODE, TITLE, STYLE), mStage(), mLogger(new Logger()),
-		mActions(), mDeltaClock(), mDeltaTime()
+		mActions(), mDeltaClock(), mDeltaTime(), mPaused(false)
 	{
 		setFramerateLimit(FRAMERATE);
 
@@ -94,7 +94,7 @@ namespace sm
 			getInput()->getEvents();
 			
 			clear(sf::Color(0x20, 0x20, 0x20, 255));
-			if(mStage)
+			if(!mPaused && mStage)
 			{
 				mStage->update();
 				draw(*mStage.get());
@@ -108,4 +108,13 @@ namespace sm
 		}
 	}
 
+	void Game::pause(void)
+	{
+		mPaused = true;
+	}
+
+	void Game::unpause(void)
+	{
+		mPaused = false;
+	}
 }

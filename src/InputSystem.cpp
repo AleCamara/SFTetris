@@ -29,6 +29,18 @@ namespace sm
 				Game::instance()->close();
 			}
 
+			// lost focus
+			if(ev.type == sf::Event::LostFocus)
+			{
+				Game::instance()->pause();
+			}
+
+			// gained focus
+			if(ev.type == sf::Event::GainedFocus)
+			{
+				Game::instance()->unpause();
+			}
+
 			// key pressed event
 			if(ev.type == sf::Event::KeyPressed)
 			{

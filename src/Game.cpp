@@ -2,8 +2,6 @@
 
 #include <Windows.h>
 
-#include <SFML\Window\Event.hpp>
-
 namespace sm
 {
 	boost::shared_ptr<Game> Game::sInstance;
@@ -93,16 +91,8 @@ namespace sm
 	{
 		while(isOpen())
 		{
-			sf::Event ev;
-			while (pollEvent(ev))
-			{
-				// close window event
-				if(ev.type == sf::Event::Closed || (ev.type == sf::Event::KeyReleased && ev.key.code == sf::Keyboard::Escape))
-				{
-					close();
-				}
-			}
-
+			getInput()->getEvents();
+			
 			clear(sf::Color(0x20, 0x20, 0x20, 255));
 			if(mStage)
 			{
@@ -112,6 +102,7 @@ namespace sm
 			display();
 
 			mActions.clear();
+			getInput()->clearEvents();
 
 			mDeltaTime = mDeltaClock.restart();
 		}

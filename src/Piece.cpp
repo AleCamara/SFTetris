@@ -48,11 +48,11 @@ namespace sm
 			{
 				movePrivate(Down);
 			}
-			if(Game::instance()->getInput()->isKeyPressed(InputSystem::Key::A))
+			if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::A))
 			{
 				rotatePrivate(CCW);
 			}
-			if(Game::instance()->getInput()->isKeyPressed(InputSystem::Key::S))
+			if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::S))
 			{
 				rotatePrivate(CW);
 			}
@@ -90,7 +90,7 @@ namespace sm
 	void Piece::rotatePrivate(Rotation rot)
 	{
 		int dRot = +1;
-		if(rot == CCW)
+		if(rot == CW)
 		{
 			dRot = -1;
 		}

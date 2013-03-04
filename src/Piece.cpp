@@ -19,6 +19,11 @@ namespace sm
 		turnOn();
 	}
 	
+	void Piece::setBoard(const boost::shared_ptr<Board>& board)
+	{
+		mBoard = board;
+	}
+
 	void Piece::update(void)
 	{
 		Game::ActionContainer::const_iterator iter = Game::instance()->getActions().cbegin();

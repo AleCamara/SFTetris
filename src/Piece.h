@@ -28,6 +28,8 @@ namespace sm
 
 		virtual ~Piece(void) {}
 
+		void setBoard(const boost::shared_ptr<Board>&);
+
 		void setRow(int row) { mRow = row; }
 		int getRow(void) const { return mRow; }
 		void setColumn(int column) { mColumn = column; }
@@ -56,7 +58,7 @@ namespace sm
 		unsigned int mNumBlocks;
 		unsigned int mRotation;
 		int mColumn, mRow;
-		const boost::shared_ptr<Board> mBoard;
+		boost::shared_ptr<Board> mBoard;
 		bool mStuck;
 		Block::BlockColor mColors[5];
 	

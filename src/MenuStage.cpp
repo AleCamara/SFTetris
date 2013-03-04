@@ -7,11 +7,11 @@
 namespace sm
 {
 	const sf::Time MenuStage::TickingTimes[5] = {
-		                                         sf::seconds(1),
-			                                     sf::seconds(0.75),
-			                                     sf::seconds(0.65),
-			                                     sf::seconds(0.5),
-			                                     sf::seconds(0.4)
+		                                         sf::seconds(1.f),
+			                                     sf::seconds(0.75f),
+			                                     sf::seconds(0.65f),
+			                                     sf::seconds(0.5f),
+			                                     sf::seconds(0.4f)
 	                                            };
 
 	MenuStage::MenuStage(void): mClock(), mTime(), mTimeScale(0), 
@@ -52,9 +52,21 @@ namespace sm
 			Game::instance()->getMath()->restartTimer(mClock);
 		}
 
-		if(mCurrentPiece)
+		if(mCurrentPiece && !mCurrentPiece->isStuck())
 		{
 			mCurrentPiece->update();
+		}
+		else if(mCurrentPiece->isStuck())
+		{
+			// prepare preview piece to be a current piece
+			mCurrentPiece = mNextPiece;
+			mCurrentPiece->setBoard(mBoard);
+			mCurrentPiece->setRow(0);
+			mCurrentPiece->setColumn(5);
+			
+			// create a new preview piece
+			mPreviewBoard->resetBlocks();
+			mNextPiece.reset(new Piece(mPreviewBoard, 2, 2));
 		}
 
 		State::update();

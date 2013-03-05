@@ -1,0 +1,3 @@
+#!/bin/bash
+
+oggenc2 -q 8 ../assets/main_theme.wav

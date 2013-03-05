@@ -69,18 +69,16 @@ namespace sm
 			mNextPiece.reset(new Piece(mPreviewBoard, 2, 2));
 
 			// check for game over
-			if(mCurrentPiece->collides())
+			if(mCurrentPiece->checkCollision())
 			{
 				Game::instance()->getLogger()->getBuffer() << "GAME OVER!";
 				Game::instance()->getLogger()->debug(5);
 			}
+
 			// check for block deletion
-			else
-			{
-				mCurrentPiece->turnOff();
-				mBoard->checkHorizontal();
-				mCurrentPiece->turnOn();
-			}
+			mCurrentPiece->turnOff();
+			mBoard->checkHorizontal();
+			mCurrentPiece->turnOn();
 		}
 
 		State::update();

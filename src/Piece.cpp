@@ -23,9 +23,24 @@ namespace sm
 		mBoard = board;
 	}
 
-	bool Piece::collides(void) const
+	bool Piece::checkCollision(void) const
 	{
-		return hitOnMove(MoveDown);
+		bool out = false;
+
+		int row = 0, column = 0;
+		for(int k=0; k<sNumBlocks; ++k)
+		{
+			row = mRow + BlockRow[mType][mRotation][k];
+			column = mColumn + BlockColumn[mType][mRotation][k];
+
+			if(mBoard->checkBoardPosition(row, column))
+			{
+				out = true;
+				break;
+			}
+		}
+
+		return out;
 	}
 
 	void Piece::turnOn(void) const

@@ -36,7 +36,7 @@ namespace sm
 		int getColumn(void) const { return mColumn; }
 
 		bool isStuck(void) const { return mStuck; }
-		bool collides(void) const;
+		bool checkCollision(void) const;
 
 		void turnOn(void) const;
 		void turnOff(void) const;

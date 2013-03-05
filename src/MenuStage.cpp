@@ -50,6 +50,11 @@ namespace sm
 				- (Game::instance()->getMath()->getTimeOfTimer(mClock) - mTime);
 			
 			Game::instance()->getMath()->restartTimer(mClock);
+
+			// with every tick check block deletion because of colors
+			mCurrentPiece->turnOff();
+			mBoard->checkColors();
+			mCurrentPiece->turnOn();
 		}
 
 		if(!mCurrentPiece->isStuck())
@@ -74,11 +79,13 @@ namespace sm
 				Game::instance()->getLogger()->getBuffer() << "GAME OVER!";
 				Game::instance()->getLogger()->debug(5);
 			}
-
 			// check for block deletion
-			mCurrentPiece->turnOff();
-			mBoard->checkHorizontal();
-			mCurrentPiece->turnOn();
+			else
+			{
+				mCurrentPiece->turnOff();
+				mBoard->checkHorizontal();
+				mCurrentPiece->turnOn();
+			}
 		}
 
 		State::update();

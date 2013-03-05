@@ -50,8 +50,7 @@ namespace sm
 		{
 			row = mRow + BlockRow[mType][mRotation][k];
 			column = mColumn + BlockColumn[mType][mRotation][k];
-			mBoard->changeBlockColor(row, column, mColors[k]);
-			mBoard->activateBlock(row, column);
+			mBoard->activateBlock(row, column, mColors[k]);
 		}
 	}
 

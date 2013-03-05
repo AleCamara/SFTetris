@@ -28,16 +28,19 @@ namespace sm
 		Block(void);
 		virtual ~Block(void);
 
-		void activate(void);
+		void activate(const BlockColor&);
 		void deactivate(void);
 		bool isActive(void) const { return mActive; }
 		
 		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 
-		void setColor(BlockColor color) { mColor = color; }
+		void setColor(const BlockColor& color) { mColor = color; }
 		BlockColor getColor(void) const { return mColor; }
 
 		void copyFrom(const Block&);
+		void markForDeletion(void) { mMarked = true; }
+		void setMarkedForDeletion(const bool mark) { mMarked = mark; }
+		bool isMarkedForDeletion(void) const { return mMarked; }
 		
 	private:
 		static const sf::Color sColorArray[BlockColorCount];
@@ -46,8 +49,9 @@ namespace sm
 
 		BlockColor mColor;
 		bool mActive;
+		bool mMarked;
 		sf::RectangleShape mRectangle;
 
-		
+		void updateColor(void);
 	};
 }

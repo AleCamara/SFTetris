@@ -15,24 +15,25 @@ namespace sm
 	   													   sf::Color::Red,
 											               sf::Color(0x40, 0x40, 0x40, 255)};
 	
-	Block::Block(void): mActive(false), mRectangle(sf::Vector2f(SIZE, SIZE))
+	Block::Block(void): mActive(false), mMarked(false), mRectangle(sf::Vector2f(SIZE, SIZE))
 	{
-		mColor = getRandomColor();
 		deactivate();
 	}
 
 	Block::~Block(void)	{}
 
-	void Block::activate(void)
+	void Block::activate(const BlockColor& color)
 	{
 		mActive = true;
-		mRectangle.setFillColor(sColorArray[mColor]);
+		setColor(color);
+		updateColor();
 	}
 
 	void Block::deactivate(void)
 	{
 		mActive = false;
-		mRectangle.setFillColor(sColorArray[Grey]);
+		setColor(Grey);
+		updateColor();
 	}
 
 	void Block::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -47,13 +48,13 @@ namespace sm
 	{
 		if(block.isActive())
 		{
-			setColor(block.getColor());
-			activate();
+			activate(block.getColor());
 		}
 		else
 		{
 			deactivate();
 		}
+		setMarkedForDeletion(block.isMarkedForDeletion());
 	}
 
 	Block::BlockColor Block::getRandomColor(void)
@@ -83,5 +84,10 @@ namespace sm
 		}
 
 		return out;
+	}
+
+	void Block::updateColor(void)
+	{
+		mRectangle.setFillColor(sColorArray[mColor]);
 	}
 }

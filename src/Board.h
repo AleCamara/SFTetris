@@ -13,7 +13,7 @@ namespace sm
 		Board(const unsigned int, const unsigned int);
 		virtual ~Board(void);
 
-		void activateBlock(const unsigned int, const unsigned int);
+		void activateBlock(const unsigned int, const unsigned int, const Block::BlockColor&);
 		void deactivateBlock(const unsigned int, const unsigned int);
 		void resetBlocks(void);
 		void changeBlockColor(const unsigned int, const unsigned int, Block::BlockColor);
@@ -31,6 +31,8 @@ namespace sm
 	private:
 		typedef std::vector<boost::shared_ptr<Block>> BlockContainerType;
 		
+		static const unsigned int sMinCoincidencesToDelete = 3;
+
 		const unsigned int mSizeI;
 		const unsigned int mSizeJ;
 
@@ -41,5 +43,12 @@ namespace sm
 
 		void turnOffRow(const unsigned int);
 		void moveRowsDown(const unsigned int);
+		void moveRowsDown(const unsigned int, const unsigned int, const unsigned int);
+		void checkHorizontalColors(void);
+		void checkVerticalColors(void);
+
+		void markHorizontal(const unsigned int, const unsigned int, const unsigned int);
+		void markVertical(const unsigned int, const unsigned int, const unsigned int);
+		void deleteMarkedBlocks(void);
 	};
 }

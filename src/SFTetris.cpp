@@ -8,5 +8,9 @@ int main(int argc, char *argv[])
 	sm::Game::instance()->setStage(boost::shared_ptr<sm::State>(new sm::MenuStage()));
 	sm::Game::instance()->loop();
 
+	sm::Game::instance()->getLogger()->getBuffer() << "Press any key to exit.";
+	sm::Game::instance()->getLogger()->info();
+	getchar();
+
 	return 0;
 }

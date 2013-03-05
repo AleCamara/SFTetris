@@ -38,6 +38,9 @@ namespace sm
 		bool isStuck(void) const { return mStuck; }
 		bool collides(void) const;
 
+		void turnOn(void) const;
+		void turnOff(void) const;
+
 		virtual void update(void);
 
 	private:
@@ -73,8 +76,6 @@ namespace sm
 		bool rotatePrivate(Rotation);
 		bool hitOnMove(Direction) const;
 		bool hitOnRotate(Rotation) const;
-		void turnOn(void) const;
-		void turnOff(void) const;
 		void getMovementVariations(Direction, int&, int&) const;
 		void getRotationVariation(Rotation, int&) const;
 		Type getRandomType(void) const;

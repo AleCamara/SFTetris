@@ -23,6 +23,9 @@ namespace sm
 
 		bool checkBoardPosition(const unsigned int, const unsigned int) const;
 
+		void checkHorizontal(void);
+		void checkColors(void);
+
 		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 
 	private:
@@ -33,7 +36,10 @@ namespace sm
 
 		BlockContainerType mBlocks;
 
-		unsigned int getIndex(unsigned int, unsigned int) const;
-		bool checkIndex(unsigned int, unsigned int) const;
+		unsigned int getIndex(const unsigned int, const unsigned int) const;
+		bool checkIndex(const unsigned int, const unsigned int) const;
+
+		void turnOffRow(const unsigned int);
+		void moveRowsDown(const unsigned int);
 	};
 }

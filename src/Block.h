@@ -30,12 +30,14 @@ namespace sm
 
 		void activate(void);
 		void deactivate(void);
-		bool checkActive(void) const { return mActive; }
+		bool isActive(void) const { return mActive; }
 		
 		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 
 		void setColor(BlockColor color) { mColor = color; }
 		BlockColor getColor(void) const { return mColor; }
+
+		void copyFrom(const Block&);
 		
 	private:
 		static const sf::Color sColorArray[BlockColorCount];

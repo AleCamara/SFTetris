@@ -28,6 +28,29 @@ namespace sm
 		return hitOnMove(MoveDown);
 	}
 
+	void Piece::turnOn(void) const
+	{
+		int row = 0, column = 0;
+		for(int k=0; k<sNumBlocks; ++k)
+		{
+			row = mRow + BlockRow[mType][mRotation][k];
+			column = mColumn + BlockColumn[mType][mRotation][k];
+			mBoard->changeBlockColor(row, column, mColors[k]);
+			mBoard->activateBlock(row, column);
+		}
+	}
+
+	void Piece::turnOff(void) const
+	{
+		int row = 0, column = 0;
+		for(int k=0; k<sNumBlocks; ++k)
+		{
+			row = mRow + BlockRow[mType][mRotation][k];
+			column = mColumn + BlockColumn[mType][mRotation][k];
+			mBoard->deactivateBlock(row, column);
+		}
+	}
+
 	void Piece::update(void)
 	{
 		Game::ActionContainer::const_iterator iter = Game::instance()->getActions().cbegin();
@@ -134,17 +157,15 @@ namespace sm
 			column = mColumn + BlockColumn[mType][mRotation][k] + dColumn;
 
 			// hit a wall
-			if((dir == MoveUp && row < 0) || 
-			   (dir == MoveDown && row >= mBoard->getNumRows()) || 
+			if((dir == MoveDown && row >= (int) mBoard->getNumRows()) || 
 			   (dir == MoveLeft && column < 0) ||
-			   (dir == MoveRight && column >= mBoard->getNumColumns()))
+			   (dir == MoveRight && column >= (int) mBoard->getNumColumns()))
 			{
 				out = true;
 				break;
 			}
 
 			// hit another piece
-			// note that row and column are valid board indices
 			if(mBoard->checkBoardPosition(row, column))
 			{
 				out = true;
@@ -178,8 +199,8 @@ namespace sm
 			column = mColumn + BlockColumn[mType][newRot][k];
 
 			// hit a wall
-			if(row < 0 || row >= mBoard->getNumRows() || 
-			   column < 0 || column >= mBoard->getNumColumns())
+			if(row >= (int) mBoard->getNumRows() || 
+			   column < 0 || column >= (int) mBoard->getNumColumns())
 			{
 				out = true;
 				break;
@@ -198,29 +219,6 @@ namespace sm
 		turnOn();
 
 		return out;
-	}
-
-	void Piece::turnOn(void) const
-	{
-		int row = 0, column = 0;
-		for(int k=0; k<sNumBlocks; ++k)
-		{
-			row = mRow + BlockRow[mType][mRotation][k];
-			column = mColumn + BlockColumn[mType][mRotation][k];
-			mBoard->changeBlockColor(row, column, mColors[k]);
-			mBoard->activateBlock(row, column);
-		}
-	}
-
-	void Piece::turnOff(void) const
-	{
-		int row = 0, column = 0;
-		for(int k=0; k<sNumBlocks; ++k)
-		{
-			row = mRow + BlockRow[mType][mRotation][k];
-			column = mColumn + BlockColumn[mType][mRotation][k];
-			mBoard->deactivateBlock(row, column);
-		}
 	}
 
 	void Piece::getMovementVariations(Direction dir, int& dRow, int& dColumn) const

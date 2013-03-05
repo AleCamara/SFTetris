@@ -43,6 +43,19 @@ namespace sm
 		Entity::draw(target, states);
 	}
 
+	void Block::copyFrom(const Block& block)
+	{
+		if(block.isActive())
+		{
+			setColor(block.getColor());
+			activate();
+		}
+		else
+		{
+			deactivate();
+		}
+	}
+
 	Block::BlockColor Block::getRandomColor(void)
 	{
 		return convertIntToColor(Game::instance()->getMath()->getRandomInteger()

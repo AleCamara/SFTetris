@@ -74,6 +74,13 @@ namespace sm
 				Game::instance()->getLogger()->getBuffer() << "GAME OVER!";
 				Game::instance()->getLogger()->debug(5);
 			}
+			// check for block deletion
+			else
+			{
+				mCurrentPiece->turnOff();
+				mBoard->checkHorizontal();
+				mCurrentPiece->turnOn();
+			}
 		}
 
 		State::update();

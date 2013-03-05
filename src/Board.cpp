@@ -56,10 +56,43 @@ namespace sm
 	{
 		if(checkIndex(i, j))
 		{
-			return mBlocks.at(getIndex(i, j))->checkActive();
+			return mBlocks.at(getIndex(i, j))->isActive();
 		}
 		// should be an exception?
 		return false;
+	}
+
+	void Board::checkHorizontal(void)
+	{
+		bool fullRow = true;
+		for(int currentRow=mSizeI-1; currentRow>=0; --currentRow)
+		{
+			fullRow = true;
+			for(int currentCol=0; currentCol<mSizeJ; ++currentCol)
+			{
+				if(!checkBoardPosition(currentRow, currentCol))
+				{
+					fullRow = false;
+					break;
+				}
+			}
+
+			if(fullRow)
+			{
+				// turn off row
+				turnOffRow(currentRow);
+
+				// move rows down
+				moveRowsDown(currentRow);
+
+				// recheck current row
+				++currentRow;
+			}
+		}
+	}
+
+	void Board::checkColors(void)
+	{
 	}
 
 	void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -72,13 +105,34 @@ namespace sm
 		}
 	}
 
-	unsigned int Board::getIndex(unsigned int i, unsigned int j) const
+	unsigned int Board::getIndex(const unsigned int i, const unsigned int j) const
 	{
 		return (i*mSizeJ + j);
 	}
 
-	bool Board::checkIndex(unsigned int i, unsigned int j) const
+	bool Board::checkIndex(const unsigned int i, const unsigned int j) const
 	{
 		return (i < mSizeI && j < mSizeJ);
+	}
+
+	void Board::turnOffRow(const unsigned int row)
+	{
+		for(int col=0; col<mSizeJ; ++col)
+		{
+			deactivateBlock(row, col);
+		}
+	}
+
+	void Board::moveRowsDown(const unsigned int startingRow)
+	{
+		// notice that does not make sense to move from row -1 to row 0
+		//                          V
+		for(int row=startingRow; row>0; --row)
+		{
+			for(int col=0; col<mSizeJ; ++col)
+			{
+				mBlocks.at(getIndex(row, col))->copyFrom(*mBlocks.at(getIndex(row-1, col)));
+			}
+		}
 	}
 }

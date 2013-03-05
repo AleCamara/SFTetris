@@ -38,6 +38,7 @@ namespace sm
 
 		void pause(void);
 		void unpause(void);
+		bool isPaused(void) const { return mPaused; }
 
 	private:
 		static boost::shared_ptr<Game> sInstance;

@@ -20,7 +20,10 @@ namespace sm
 
 	void MathSystem::update(void)
 	{
-		mMasterTime += Game::instance()->getDeltaTime();
+		if(!Game::instance()->isPaused())
+		{
+			mMasterTime += Game::instance()->getDeltaTime();
+		}
 	}
 
 	void MathSystem::quit(void)

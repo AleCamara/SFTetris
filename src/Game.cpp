@@ -92,16 +92,16 @@ namespace sm
 		while(isOpen())
 		{
 			// system updates
-			if(!mPaused)
-			{
-				getMath()->update();
-				getInput()->update();
-			}
+			getMath()->update();
+			getInput()->update();
 			
 			clear(sf::Color(0x20, 0x20, 0x20, 255));
-			if(!mPaused && mStage)
+			if(mStage)
 			{
-				mStage->update();
+				if(!mPaused)
+				{
+					mStage->update();
+				}
 				draw(*mStage.get());
 			}
 			display();

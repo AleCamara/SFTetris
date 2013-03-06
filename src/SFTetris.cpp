@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "MenuStage.h"
+#include "Logger.h"
 
 int main(int argc, char *argv[])
 {

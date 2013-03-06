@@ -2,6 +2,10 @@
 
 #include "Game.h"
 #include "Board.h"
+#include "Logger.h"
+#include "MathSystem.h"
+#include "InputSystem.h"
+#include "Action.h"
 
 namespace sm
 {

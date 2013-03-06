@@ -3,6 +3,10 @@
 #include "Game.h"
 #include "Board.h"
 #include "Piece.h"
+#include "Action.h"
+#include "Logger.h"
+#include "MathSystem.h"
+#include "AudioSystem.h"
 
 namespace sm
 {
@@ -15,7 +19,8 @@ namespace sm
 	                                            };
 
 	MenuStage::MenuStage(void): mClock(), mTime(), mTimeScale(0), 
-		mBoard(), mPreviewBoard(), mCurrentPiece(), mNextPiece()
+		mBoard(), mPreviewBoard(), mCurrentPiece(), mNextPiece(),
+		mMusicPiece()
 	{
 		mTime = TickingTimes[mTimeScale];
 	}
@@ -36,8 +41,12 @@ namespace sm
 		addEntity(boost::shared_ptr<Entity>(mPreviewBoard));
 
 		mCurrentPiece = boost::shared_ptr<Piece>(new Piece(mBoard, 0, 5));
-
 		mNextPiece = boost::shared_ptr<Piece>(new Piece(mPreviewBoard, 2, 2));
+
+		mMusicPiece = Game::instance()->getAudio()->createMusicPiece();
+		Game::instance()->getAudio()->getMusicPiece(mMusicPiece)->openFromFile("assets/main_theme.ogg");
+		Game::instance()->getAudio()->getMusicPiece(mMusicPiece)->setLoop(true);
+		Game::instance()->getAudio()->playMusicPiece(mMusicPiece);
 	}
 
 	void MenuStage::update(void)
@@ -89,5 +98,10 @@ namespace sm
 		}
 
 		State::update();
+	}
+
+	void MenuStage::quit(void)
+	{
+		Game::instance()->getAudio()->stopMusic();
 	}
 }

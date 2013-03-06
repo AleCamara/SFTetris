@@ -16,6 +16,7 @@ namespace sm
 
 		virtual void init(void);
 		virtual void update(void);
+		virtual void quit(void);
 
 	private:
 		static const sf::Time TickingTimes[5];
@@ -23,6 +24,7 @@ namespace sm
 		unsigned int mClock;
 		sf::Time mTime;
 		unsigned int mTimeScale;
+		unsigned int mMusicPiece;
 		
 		boost::shared_ptr<Board> mBoard;
 		boost::shared_ptr<Board> mPreviewBoard;

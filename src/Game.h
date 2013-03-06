@@ -4,15 +4,22 @@
 #include <vector>
 #include <boost\shared_ptr.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML\System\Time.hpp>
-#include "State.h"
-#include "Logger.h"
-#include "MathSystem.h"
-#include "InputSystem.h"
-#include "Action.h"
+
+namespace sf
+{
+	class Clock;
+	class Time;
+}
 
 namespace sm
 {
+	class State;
+	class Action;
+	class Logger;
+	class InputSystem;
+	class MathSystem;
+	class AudioSystem;
+
 	class Game : public sf::RenderWindow
 	{
 	public:
@@ -26,6 +33,7 @@ namespace sm
 
 		boost::shared_ptr<InputSystem> getInput(void);
 		boost::shared_ptr<MathSystem> getMath(void);
+		boost::shared_ptr<AudioSystem> getAudio(void);
 		boost::shared_ptr<Logger> getLogger(void);
 
 		void addAction(const boost::shared_ptr<Action>&);
@@ -52,6 +60,7 @@ namespace sm
 		boost::shared_ptr<Logger> mLogger;
 		boost::shared_ptr<MathSystem> mMath;
 		boost::shared_ptr<InputSystem> mInput;
+		boost::shared_ptr<AudioSystem> mAudio;
 		ActionContainer mActions;
 		sf::Clock mDeltaClock;
 		sf::Time mDeltaTime;

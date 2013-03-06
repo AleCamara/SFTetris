@@ -2,6 +2,7 @@
 
 #include <SFML\Graphics\RenderTarget.hpp>
 #include "Game.h"
+#include "Logger.h"
 
 namespace sm
 {

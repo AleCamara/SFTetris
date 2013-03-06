@@ -21,6 +21,7 @@ namespace sm
 		void clearEntities(void);
 
 		virtual void init(void) {}
+		virtual void quit(void) {}
 
 		virtual void update(void);
 		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;

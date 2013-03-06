@@ -1,6 +1,13 @@
 #include "Game.h"
 
 #include <Windows.h>
+#include <SFML\System\Time.hpp>
+#include "State.h"
+#include "Action.h"
+#include "Logger.h"
+#include "MathSystem.h"
+#include "InputSystem.h"
+#include "AudioSystem.h"
 
 namespace sm
 {
@@ -18,6 +25,7 @@ namespace sm
 
 		mMath = boost::shared_ptr<MathSystem>(new MathSystem());
 		mInput = boost::shared_ptr<InputSystem>(new InputSystem());
+		mAudio = boost::shared_ptr<AudioSystem>(new AudioSystem());
 	}
 
 	Game::~Game(void)
@@ -29,6 +37,10 @@ namespace sm
 		if(mInput)
 		{
 			mInput->quit();
+		}
+		if(mAudio)
+		{
+			mAudio->quit();
 		}
 	}
 
@@ -61,6 +73,11 @@ namespace sm
 		return mMath;
 	}
 
+	boost::shared_ptr<AudioSystem> Game::getAudio(void)
+	{
+		return mAudio;
+	}
+
 	boost::shared_ptr<Logger> Game::getLogger(void)
 	{
 		return mLogger;
@@ -85,6 +102,7 @@ namespace sm
 	{
 		mMath->init();
 		mInput->init();
+		mAudio->init();
 	}
 
 	void Game::loop(void)
@@ -109,6 +127,11 @@ namespace sm
 			mActions.clear();
 
 			mDeltaTime = mDeltaClock.restart();
+		}
+
+		if(mStage)
+		{
+			mStage->quit();
 		}
 	}
 

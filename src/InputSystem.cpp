@@ -1,6 +1,7 @@
 #include "InputSystem.h"
 
 #include "Game.h"
+#include "AudioSystem.h"
 
 namespace sm
 {
@@ -26,6 +27,11 @@ namespace sm
 			   (ev.type == sf::Event::KeyReleased && ev.key.code == sf::Keyboard::Escape))
 			{
 				Game::instance()->close();
+			}
+
+			if(ev.type == sf::Event::KeyReleased && ev.key.code == sf::Keyboard::M)
+			{
+				Game::instance()->getAudio()->toggleMusic();
 			}
 
 			// lost focus

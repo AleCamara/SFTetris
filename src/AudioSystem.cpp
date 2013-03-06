@@ -37,6 +37,21 @@ namespace sm
 		}
 	}
 
+	void AudioSystem::toggleMusic(void)
+	{
+		if(checkIndex(mCurrentMusic))
+		{
+			if(mMusicPieces.at(mCurrentMusic)->getStatus() == sf::SoundSource::Playing)
+			{
+				stopMusic();
+			}
+			else
+			{
+				playMusic();
+			}
+		}
+	}
+
 	unsigned int AudioSystem::createMusicPiece(void)
 	{
 		mMusicPieces.push_back(boost::shared_ptr<sf::Music>(new sf::Music()));

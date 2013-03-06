@@ -20,6 +20,7 @@ namespace sm
 		void playMusic(void);
 		void pauseMusic(void);
 		void stopMusic(void);
+		void toggleMusic(void);
 
 		unsigned int createMusicPiece(void);
 		void playMusicPiece(const unsigned int);

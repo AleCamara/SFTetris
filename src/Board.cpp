@@ -180,7 +180,14 @@ namespace sm
 						<< numMatches << " matches.";
 					Game::instance()->getLogger()->debug(5);
 
-					markHorizontal(row, startColumn, endColumn);
+					if(curColor == iterColor)
+					{
+						markHorizontal(row, startColumn, endColumn);
+					}
+					else
+					{
+						markHorizontal(row, startColumn, endColumn-1);
+					}
 
 					startColumn = endColumn;
 					curColor = iterColor;
@@ -226,7 +233,14 @@ namespace sm
 						<< numMatches << " matches.";
 					Game::instance()->getLogger()->debug(5);
 
-					markVertical(col, startRow, endRow+1);
+					if(curColor == iterColor)
+					{
+						markVertical(col, startRow, endRow);
+					}
+					else
+					{
+						markVertical(col, startRow, endRow+1);
+					}
 
 					startRow = endRow;
 					curColor = iterColor;

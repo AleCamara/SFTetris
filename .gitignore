@@ -1,3 +1,6 @@
+# bundle files
+SFTetris.zip
+
 # VSC++ files and directories
 *.opensdf
 *.sdf
@@ -7,6 +10,7 @@
 build/
 ipch/
 bin/
+bundle/
 
 # Compiled Object files
 *.slo

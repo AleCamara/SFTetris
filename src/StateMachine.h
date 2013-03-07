@@ -36,6 +36,7 @@ namespace sm
 		BleepStack mBleepStack;
 
 		void switchState(const std::string&, const std::string&);
+		void popBleepState(void);
 		bool checkStateId(const std::string&) const;
 	};
 }

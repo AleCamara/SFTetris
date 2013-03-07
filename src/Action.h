@@ -12,8 +12,6 @@ namespace sm
 
 		const std::string& getId(void) const { return mId; }
 
-		void add(void);
-
 	private:
 		std::string mId;
 	};

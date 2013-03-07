@@ -23,8 +23,7 @@ namespace sm
 		while(Game::instance()->pollEvent(ev))
 		{
 			// close window event
-			if(ev.type == sf::Event::Closed ||
-			   (ev.type == sf::Event::KeyReleased && ev.key.code == sf::Keyboard::Escape))
+			if(ev.type == sf::Event::Closed)
 			{
 				Game::instance()->close();
 			}

@@ -1,4 +1,4 @@
-#include "MenuStage.h"
+#include "MainState.h"
 
 #include "Game.h"
 #include "Board.h"
@@ -7,10 +7,11 @@
 #include "Logger.h"
 #include "MathSystem.h"
 #include "AudioSystem.h"
+#include "InputSystem.h"
 
 namespace sm
 {
-	const sf::Time MenuStage::TickingTimes[5] = {
+	const sf::Time MainState::TickingTimes[5] = {
 		                                         sf::seconds(1.f),
 			                                     sf::seconds(0.75f),
 			                                     sf::seconds(0.65f),
@@ -18,18 +19,18 @@ namespace sm
 			                                     sf::seconds(0.4f)
 	                                            };
 
-	MenuStage::MenuStage(void): State("MenuStage"), mClock(), mTime(), mTimeScale(0), 
+	MainState::MainState(void): State("game"), mClock(), mTime(), mTimeScale(0), 
 		mBoard(), mPreviewBoard(), mCurrentPiece(), mNextPiece(),
 		mMusicPiece()
 	{
 		mTime = TickingTimes[mTimeScale];
 	}
 
-	void MenuStage::init(void)
+	void MainState::init(void)
 	{
 		mClock = Game::instance()->getMath()->createTimer();
 
-		Game::instance()->getLogger()->getBuffer() << "MenuStage::init(void) called";
+		Game::instance()->getLogger()->getBuffer() << "MainState::init()";
 		Game::instance()->getLogger()->debug(5);
 
 		mBoard = boost::shared_ptr<Board>(new Board(21, 11));
@@ -49,7 +50,7 @@ namespace sm
 		Game::instance()->getAudio()->playMusicPiece(mMusicPiece);
 	}
 
-	void MenuStage::update(void)
+	void MainState::update(void)
 	{
 		if(Game::instance()->getMath()->getTimeOfTimer(mClock) > mTime)
 		{
@@ -97,11 +98,18 @@ namespace sm
 			}
 		}
 
+		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::Escape))
+		{
+			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("gomenu")));
+		}
+
 		State::update();
 	}
 
-	void MenuStage::quit(void)
+	void MainState::quit(void)
 	{
+		Game::instance()->getLogger()->getBuffer() << "MainState::quit()";
+		Game::instance()->getLogger()->debug(5);
 		Game::instance()->getAudio()->stopMusic();
 	}
-}
+}	

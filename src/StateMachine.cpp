@@ -64,6 +64,20 @@ namespace sm
 			RuleForAllMap::const_iterator ruleForAll;
 			for(; action != actions.cend(); ++action)
 			{
+				// exit action
+				if((*action)->getId() == "exit")
+				{
+					Game::instance()->close();
+					break;
+				}
+
+				// bleep states
+				if((*action)->getId() == "back" && mBleepStack.size() > 0)
+				{
+					popBleepState();
+					continue;
+				}
+
 				// specific rules have preference over general rules
 				rule = mRuleMap.find(RuleMap::key_type((*action)->getId(), mCurrentState));
 				if(rule != mRuleMap.cend())
@@ -83,7 +97,15 @@ namespace sm
 				}
 			}
 
-			mStates[mCurrentState]->update();
+			// check bleep first
+			if(mBleepStack.size() > 0)
+			{
+				mStates[mBleepStack[mBleepStack.size()-1]]->update();
+			}
+			else
+			{
+				mStates[mCurrentState]->update();
+			}
 		}
 	}
 
@@ -121,7 +143,29 @@ namespace sm
 
 	void StateMachine::switchState(const std::string& origin, const std::string& destination)
 	{
+		if(checkStateId(origin) && checkStateId(destination))
+		{
+			if(!mStates[destination]->isBleep())
+			{
+				mStates.at(origin)->quit();
+				mCurrentState = destination;
+				mBleepStack.clear();
+			}
+			else
+			{
+				mBleepStack.push_back(destination);
+			}
+			mStates.at(destination)->init();
+		}
+	}
 
+	void StateMachine::popBleepState(void)
+	{
+		if(mBleepStack.size() > 0 && checkStateId(mBleepStack.at(mBleepStack.size()-1)))
+		{
+			mStates.at(mBleepStack.at(mBleepStack.size()-1))->quit();
+			mBleepStack.pop_back();
+		}
 	}
 
 	bool StateMachine::checkStateId(const std::string& id) const

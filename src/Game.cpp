@@ -20,7 +20,7 @@ namespace sm
 	const unsigned int Game::STYLE = sf::Style::Titlebar | sf::Style::Close;
 
 	Game::Game(void): RenderWindow(VIDEO_MODE, TITLE, STYLE), mStateMachine(), mLogger(new Logger()),
-		mActions(), mDeltaClock(), mDeltaTime(), mPaused(false)
+		mCurrentActionList(0), mDeltaClock(), mDeltaTime(), mPaused(false)
 	{
 		setFramerateLimit(FRAMERATE);
 
@@ -29,6 +29,9 @@ namespace sm
 		mAudio = boost::shared_ptr<AudioSystem>(new AudioSystem());
 
 		mStateMachine = boost::shared_ptr<StateMachine>(new StateMachine("GameSM"));
+
+		mActions[0] = ActionContainer();
+		mActions[1] = ActionContainer();
 	}
 
 	Game::~Game(void)
@@ -95,12 +98,12 @@ namespace sm
 	
 	void Game::addAction(const boost::shared_ptr<Action>& action)
 	{
-		mActions.push_back(boost::shared_ptr<Action>(action));
+		mActions[(mCurrentActionList + 1) % 2].push_back(boost::shared_ptr<Action>(action));
 	}
 
 	const Game::ActionContainer& Game::getActions(void) const
 	{
-		return mActions;
+		return mActions[mCurrentActionList];
 	}
 
 	sf::Time Game::getDeltaTime(void) const
@@ -128,11 +131,12 @@ namespace sm
 			if(!mPaused)
 			{
 				mStateMachine->update();
+
+				mActions[mCurrentActionList].clear();
+				mCurrentActionList = (mCurrentActionList+1) % 2;
 			}
 			draw(*mStateMachine.get());
 			display();
-
-			mActions.clear();
 
 			mDeltaTime = mDeltaClock.restart();
 		}

@@ -64,7 +64,8 @@ namespace sm
 		boost::shared_ptr<MathSystem> mMath;
 		boost::shared_ptr<InputSystem> mInput;
 		boost::shared_ptr<AudioSystem> mAudio;
-		ActionContainer mActions;
+		ActionContainer mActions[2];
+		unsigned int mCurrentActionList;
 		sf::Clock mDeltaClock;
 		sf::Time mDeltaTime;
 		bool mPaused;

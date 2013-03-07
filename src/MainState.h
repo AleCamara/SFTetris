@@ -8,11 +8,11 @@ namespace sm
 	class Board;
 	class Piece;
 
-	class MenuStage: public State
+	class MainState: public State
 	{
 	public:
-		MenuStage(void);
-		virtual ~MenuStage(void) {}
+		MainState(void);
+		virtual ~MainState(void) {}
 
 		virtual void init(void);
 		virtual void update(void);

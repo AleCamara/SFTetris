@@ -11,11 +11,10 @@ namespace sm
 	public:
 		enum BlockColor
 		{
-			Blue = 0,
-			Magenta,
-			Green,
+			Red = 0,
 			Yellow,
-			Red,
+			Blue,
+			Green,
 			Grey,
 			BlockColorCount
 		};

@@ -9,11 +9,10 @@ namespace sm
 	const float Block::SIZE = 15.f;
 	const float Block::PADDING = 2.f;
 
-	const sf::Color Block::sColorArray[BlockColorCount] = {sf::Color::Blue,
-		                                                   sf::Color::Magenta,
-											               sf::Color::Green,
-											               sf::Color::Yellow,
-	   													   sf::Color::Red,
+	const sf::Color Block::sColorArray[BlockColorCount] = {sf::Color(255U, 77U, 61U, 255U),
+		                                                   sf::Color(255U, 216U, 0U, 255U),
+											               sf::Color(0U, 148U, 255U, 255U),
+											               sf::Color(41U, 173U, 89U, 255U),
 											               sf::Color(0x40, 0x40, 0x40, 255)};
 	
 	Block::Block(void): mActive(false), mMarked(false), mRectangle(sf::Vector2f(SIZE, SIZE))
@@ -66,21 +65,18 @@ namespace sm
 
 	Block::BlockColor Block::convertIntToColor(int colorInt)
 	{
-		BlockColor out = Blue;
+		BlockColor out = Red;
 
 		switch(colorInt)
 		{
 		case 1:
-			out = Magenta;
-			break;
-		case 2:
-			out = Green;
-			break;
-		case 3:
 			out = Yellow;
 			break;
-		case 4:
-			out = Red;
+		case 2:
+			out = Blue;
+			break;
+		case 3:
+			out = Green;
 			break;
 		}
 

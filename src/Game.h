@@ -14,6 +14,7 @@ namespace sf
 namespace sm
 {
 	class State;
+	class StateMachine;
 	class Action;
 	class Logger;
 	class InputSystem;
@@ -29,7 +30,9 @@ namespace sm
 
 		~Game(void);
 
-		void setStage(boost::shared_ptr<State>);
+		void addState(const boost::shared_ptr<State>&);
+		void addRuleForAll(const std::string&, const std::string&);
+		void addRule(const std::string&, const std::string&, const std::string&);
 
 		boost::shared_ptr<InputSystem> getInput(void);
 		boost::shared_ptr<MathSystem> getMath(void);
@@ -56,7 +59,7 @@ namespace sm
 		static const std::string TITLE;
 		static const unsigned int STYLE;
 
-		boost::shared_ptr<State> mStage;
+		boost::shared_ptr<StateMachine> mStateMachine;
 		boost::shared_ptr<Logger> mLogger;
 		boost::shared_ptr<MathSystem> mMath;
 		boost::shared_ptr<InputSystem> mInput;

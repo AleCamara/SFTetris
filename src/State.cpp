@@ -5,14 +5,14 @@
 
 namespace sm
 {
-	State::IdType State::sCurrentId = 0;
-
-	State::State(void): mId(0), mEntity(new Entity())
+	State::State(const std::string& id): mId(id), mBleep(false), mEntity(new Entity())
 	{
-		mId = sCurrentId++;
 	}
 
-	State::~State(void)	{}
+	State::State(const std::string& id, const bool bleep)
+		: mId(id), mBleep(bleep), mEntity(new Entity())
+	{
+	}
 
 	void State::addEntity(const boost::shared_ptr<Entity>& entity)
 	{

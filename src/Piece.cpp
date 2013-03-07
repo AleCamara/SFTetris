@@ -74,7 +74,7 @@ namespace sm
 		Game::ActionContainer::const_iterator iter = Game::instance()->getActions().cbegin();
 		for(; iter != Game::instance()->getActions().cend(); ++iter)
 		{
-			if((*iter)->getString() == "tick")
+			if((*iter)->getId() == "tick")
 			{
 				updatePrivate();
 				Game::instance()->getLogger()->getBuffer() << "Piece is " << mType << " and knows it has to update.";

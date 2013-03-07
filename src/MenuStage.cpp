@@ -18,7 +18,7 @@ namespace sm
 			                                     sf::seconds(0.4f)
 	                                            };
 
-	MenuStage::MenuStage(void): mClock(), mTime(), mTimeScale(0), 
+	MenuStage::MenuStage(void): State("MenuStage"), mClock(), mTime(), mTimeScale(0), 
 		mBoard(), mPreviewBoard(), mCurrentPiece(), mNextPiece(),
 		mMusicPiece()
 	{

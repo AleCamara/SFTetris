@@ -10,25 +10,25 @@ namespace sm
 	class State: public IMutable, public sf::Drawable
 	{
 	public:
-		typedef unsigned int IdType;
 
-		State(void);
-		virtual ~State(void);
+		State(const std::string&);
+		State(const std::string&, const bool);
+		virtual ~State(void) {}
 
-		IdType getId(void) const { return mId; }
+		std::string getId(void) const { return mId; }
+		bool isBleep(void) const { return mBleep; }
 
 		void addEntity(const boost::shared_ptr<Entity>&);
 		void clearEntities(void);
 
 		virtual void init(void) {}
-		virtual void quit(void) {}
-
 		virtual void update(void);
+		virtual void quit(void) {}
 		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 
 	private:
-		static IdType sCurrentId;
-		IdType mId;
+		const std::string mId;
+		const bool mBleep;
 		boost::shared_ptr<Entity> mEntity;
 	};
 }

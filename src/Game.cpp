@@ -8,6 +8,7 @@
 #include "MathSystem.h"
 #include "InputSystem.h"
 #include "AudioSystem.h"
+#include "StateMachine.h"
 
 namespace sm
 {
@@ -18,7 +19,7 @@ namespace sm
 	const std::string Game::TITLE = std::string("Simple+Fast TETRIS");
 	const unsigned int Game::STYLE = sf::Style::Titlebar | sf::Style::Close;
 
-	Game::Game(void): RenderWindow(VIDEO_MODE, TITLE, STYLE), mStage(), mLogger(new Logger()),
+	Game::Game(void): RenderWindow(VIDEO_MODE, TITLE, STYLE), mStateMachine(), mLogger(new Logger()),
 		mActions(), mDeltaClock(), mDeltaTime(), mPaused(false)
 	{
 		setFramerateLimit(FRAMERATE);
@@ -26,6 +27,8 @@ namespace sm
 		mMath = boost::shared_ptr<MathSystem>(new MathSystem());
 		mInput = boost::shared_ptr<InputSystem>(new InputSystem());
 		mAudio = boost::shared_ptr<AudioSystem>(new AudioSystem());
+
+		mStateMachine = boost::shared_ptr<StateMachine>(new StateMachine("GameSM"));
 	}
 
 	Game::~Game(void)
@@ -54,13 +57,20 @@ namespace sm
 		return sInstance;
 	}
 
-	void Game::setStage(boost::shared_ptr<State> stage)
+	void Game::addState(const boost::shared_ptr<State>& state)
 	{
-		if(stage)
-		{
-			stage->init();
-			mStage.swap(stage);
-		}
+		mStateMachine->addState(state);
+	}
+
+	void Game::addRuleForAll(const std::string& action, const std::string& state)
+	{
+		mStateMachine->addRuleForAll(action, state);
+	}
+
+	void Game::addRule(const std::string& action, const std::string& origin,
+		const std::string& destination)
+	{
+		mStateMachine->addRule(action, origin, destination);
 	}
 
 	boost::shared_ptr<InputSystem> Game::getInput(void)
@@ -112,16 +122,14 @@ namespace sm
 			// system updates
 			getMath()->update();
 			getInput()->update();
+			getAudio()->update();
 			
 			clear(sf::Color(0x20, 0x20, 0x20, 255));
-			if(mStage)
+			if(!mPaused)
 			{
-				if(!mPaused)
-				{
-					mStage->update();
-				}
-				draw(*mStage.get());
+				mStateMachine->update();
 			}
+			draw(*mStateMachine.get());
 			display();
 
 			mActions.clear();
@@ -129,10 +137,7 @@ namespace sm
 			mDeltaTime = mDeltaClock.restart();
 		}
 
-		if(mStage)
-		{
-			mStage->quit();
-		}
+		mStateMachine->quit();
 	}
 
 	void Game::pause(void)

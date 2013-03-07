@@ -1,27 +1,41 @@
 #pragma once
 
-#include <hash_map>
-#include <list>
-#include <boost\scoped_ptr.hpp>
+#include <map>
+#include <vector>
+#include <boost\shared_ptr.hpp>
 #include "State.h"
 #include "Action.h"
 
 namespace sm
 {
-	class StateMachine: State
+	class StateMachine: public State
 	{
 	public:
-		typedef std::hash_map<std::pair<State::IdType, Action::IdType>, State::IdType> ResolvMapType;
-		typedef std::list<boost::scoped_ptr<State>> StateContainerType;
+		typedef std::map<std::pair<std::string, std::string>, std::string> RuleMap;
+		typedef std::map<std::string, std::string> RuleForAllMap;
+		typedef std::map<std::string, boost::shared_ptr<State>> StateContainerType;
+		typedef std::vector<std::string> BleepStack;
 
-		StateMachine(void);
+		StateMachine(const std::string&);
 		~StateMachine(void);
 
-		void update(void);
+		void addState(const boost::shared_ptr<State>&);
+		void addRuleForAll(const std::string&, const std::string&);
+		void addRule(const std::string&, const std::string&, const std::string&);
+
+		virtual void init(void) {}
+		virtual void update(void);
+		virtual void quit(void);
+		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 
 	private:
-		State *mCurrentState;
-		ResolvMapType mResolvMap;
+		std::string mCurrentState;
+		RuleMap mRuleMap;
+		RuleForAllMap mRuleForAllMap;
 		StateContainerType mStates;
+		BleepStack mBleepStack;
+
+		void switchState(const std::string&, const std::string&);
+		bool checkStateId(const std::string&) const;
 	};
 }

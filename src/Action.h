@@ -7,19 +7,14 @@ namespace sm
 	class Action
 	{
 	public:
-		typedef unsigned int IdType;
-
 		Action(const std::string&);
 		~Action(void) {}
 
-		IdType getId(void) const { return mId; }
-		std::string getString(void) const { return mString; }
+		const std::string& getId(void) const { return mId; }
 
 		void add(void);
 
 	private:
-		static IdType sCurrentId;
-		IdType mId;
-		std::string mString;
+		std::string mId;
 	};
 }

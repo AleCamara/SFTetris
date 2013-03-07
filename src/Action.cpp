@@ -2,11 +2,8 @@
 
 namespace sm
 {
-	Action::IdType Action::sCurrentId = 0;
-
-	Action::Action(const std::string& actionString)
-		: mString(actionString)
+	Action::Action(const std::string& id)
+		: mId(id)
 	{
-		mId = sCurrentId++;
 	}
 }

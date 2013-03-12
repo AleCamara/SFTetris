@@ -69,12 +69,12 @@ namespace sm
 		resetKeys();
 	}
 
-	bool InputSystem::isKeyPressed(Key key) const
+	bool InputSystem::isKeyPressed(Keyboard::Key key) const
 	{
 		return mKey[Pressed][key];
 	}
 
-	bool InputSystem::isKeyReleased(Key key) const
+	bool InputSystem::isKeyReleased(Keyboard::Key key) const
 	{
 		return mKey[Released][key];
 	}

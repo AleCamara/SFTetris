@@ -21,15 +21,15 @@ namespace sm
 
 	void MenuState::update(void)
 	{
-		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::A))
+		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Keyboard::A))
 		{
 			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("back")));
 		}
-		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::S))
+		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Keyboard::S))
 		{
 			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("gotitle")));
 		}
-		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::Escape))
+		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Keyboard::Escape))
 		{
 			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("exit")));
 		}

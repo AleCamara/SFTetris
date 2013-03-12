@@ -14,7 +14,7 @@ namespace sm
 
 	void MathSystem::init(void)
 	{
-		srand(time(0));
+		srand((unsigned int)time(0));
 		mMasterTime = sf::Time();
 	}
 

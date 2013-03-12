@@ -7,10 +7,12 @@
 
 namespace sm
 {
+	using sf::Keyboard;
+
 	class InputSystem: public GameSystem
 	{
 	public:
-		typedef sf::Keyboard::Key Key;
+		typedef sf::Keyboard Keyboard;
 
 		InputSystem(void);
 		virtual ~InputSystem(void) {}
@@ -22,8 +24,8 @@ namespace sm
 		void getEvents(void);
 		void clearEvents(void);
 
-		bool isKeyPressed(Key) const;
-		bool isKeyReleased(Key) const;
+		bool isKeyPressed(Keyboard::Key) const;
+		bool isKeyReleased(Keyboard::Key) const;
 
 	private:
 		enum KeyEventState

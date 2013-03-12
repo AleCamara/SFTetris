@@ -98,7 +98,7 @@ namespace sm
 			}
 		}
 
-		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::Escape))
+		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Keyboard::Escape))
 		{
 			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("gomenu")));
 		}

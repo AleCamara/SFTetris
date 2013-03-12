@@ -86,23 +86,23 @@ namespace sm
 		// move with player input
 		if(!mStuck)
 		{
-			if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::Right))
+			if(Game::instance()->getInput()->isKeyReleased(InputSystem::Keyboard::Right))
 			{
 				movePrivate(MoveRight);
 			}
-			if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::Left))
+			if(Game::instance()->getInput()->isKeyReleased(InputSystem::Keyboard::Left))
 			{
 				movePrivate(MoveLeft);
 			}
-			if(Game::instance()->getInput()->isKeyPressed(InputSystem::Key::Down))
+			if(Game::instance()->getInput()->isKeyPressed(InputSystem::Keyboard::Down))
 			{
 				movePrivate(MoveDown);
 			}
-			if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::A))
+			if(Game::instance()->getInput()->isKeyReleased(InputSystem::Keyboard::A))
 			{
 				rotatePrivate(CCW);
 			}
-			if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::S))
+			if(Game::instance()->getInput()->isKeyReleased(InputSystem::Keyboard::S))
 			{
 				rotatePrivate(CW);
 			}

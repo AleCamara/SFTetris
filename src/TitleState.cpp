@@ -26,11 +26,11 @@ namespace sm
 
 	void TitleState::update(void)
 	{
-		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::A))
+		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Keyboard::A))
 		{
 			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("play")));
 		}
-		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Key::Escape))
+		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Keyboard::Escape))
 		{
 			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("exit")));
 		}

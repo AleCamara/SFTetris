@@ -55,11 +55,18 @@ namespace sm
 					mTexts[1].setString(ss.str());
 				}
 			}
-		}
 
-		std::stringstream ss;
-		ss << "0";
-		mTexts[3].setString(ss.str());
+			if((*action)->getId() == "level_changed")
+			{
+				int level = 0;
+				if((*action)->getData()->pollInteger("level", level))
+				{
+					std::stringstream ss;
+					ss << level;
+					mTexts[3].setString(ss.str());
+				}
+			}
+		}
 	}
 
 	void MainStateEntity::draw(sf::RenderTarget& target, sf::RenderStates states) const

@@ -15,14 +15,16 @@
 namespace sm
 {
 	const sf::Time MainState::TickingTimes[5] = {
-		                                         sf::seconds(1.f),
-			                                     sf::seconds(0.75f),
-			                                     sf::seconds(0.65f),
-			                                     sf::seconds(0.5f),
-			                                     sf::seconds(0.4f)
+		                                         sf::seconds(0.9f),
+			                                     sf::seconds(0.6f),
+			                                     sf::seconds(0.4f),
+			                                     sf::seconds(0.3f),
+			                                     sf::seconds(0.2f)
 	                                            };
 
 	const float MainState::Scores[5] = { 10.f, 10.f*2.f, 10.f*4.f, 10.f*8.f, 10.f*16.f };
+
+	const float MainState::NextLevel[4] = { 250.f, 2000.f, 16000.f, 32000.f};
 
 	MainState::MainState(void): State("game"), mClock(), mTime(), mTimeScale(0), 
 		mMusicPiece(), mScore(0L), mBoard(), mPreviewBoard(), mCurrentPiece(), mNextPiece()		
@@ -73,6 +75,14 @@ namespace sm
 					boost::shared_ptr<Action> action(new Action("score_changed"));
 					action->insertData("score", DataElement(mScore));
 					Game::instance()->addAction(action);
+
+					if(mScore > NextLevel[mTimeScale])
+					{
+						++mTimeScale;
+						boost::shared_ptr<Action> action(new Action("level_changed"));
+						action->insertData("level", DataElement((int)mTimeScale));
+						Game::instance()->addAction(action);
+					}
 				}
 			}
 		}

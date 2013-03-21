@@ -21,6 +21,7 @@ namespace sm
 	private:
 		static const sf::Time TickingTimes[5];
 		static const float Scores[5];
+		static const float NextLevel[4];
 
 		unsigned int mClock;
 		sf::Time mTime;

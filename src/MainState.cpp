@@ -21,8 +21,7 @@ namespace sm
 	                                            };
 
 	MainState::MainState(void): State("game"), mClock(), mTime(), mTimeScale(0), 
-		mBoard(), mPreviewBoard(), mCurrentPiece(), mNextPiece(),
-		mMusicPiece()
+		mMusicPiece(), mBoard(), mPreviewBoard(), mCurrentPiece(), mNextPiece()		
 	{
 		mTime = TickingTimes[mTimeScale];
 	}

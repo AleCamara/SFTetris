@@ -93,7 +93,6 @@ namespace sm
 	{
 		checkHorizontalColors();
 		checkVerticalColors();
-		deleteMarkedBlocks();
 	}
 
 	void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const

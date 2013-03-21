@@ -115,6 +115,7 @@ namespace sm
 				mCurrentPiece->turnOff();
 				mBoard->checkHorizontal();
 				mBoard->checkColors();
+				mBoard->deleteMarkedBlocks();
 				mCurrentPiece->turnOn();
 			}
 		}

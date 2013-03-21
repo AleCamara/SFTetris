@@ -25,6 +25,7 @@ namespace sm
 
 		void checkHorizontal(void);
 		void checkColors(void);
+		void deleteMarkedBlocks(void);
 
 		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
 
@@ -49,6 +50,5 @@ namespace sm
 
 		void markHorizontal(const unsigned int, const unsigned int, const unsigned int);
 		void markVertical(const unsigned int, const unsigned int, const unsigned int);
-		void deleteMarkedBlocks(void);
 	};
 }

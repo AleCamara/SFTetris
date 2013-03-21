@@ -5,7 +5,7 @@
 
 namespace sm
 {
-	MenuImage::MenuImage(void): mTexture(), mSprite(), mFont(), mTexts()
+	MenuImage::MenuImage(void): Entity(), mTexture(), mSprite(), mFont(), mTexts()
 	{
 		mTexture.loadFromFile("assets/menu.png");
 		mSprite.setTexture(mTexture);

@@ -8,6 +8,7 @@
 #include "MathSystem.h"
 #include "AudioSystem.h"
 #include "InputSystem.h"
+#include "MainStateEntity.h"
 
 namespace sm
 {
@@ -38,7 +39,7 @@ namespace sm
 		addEntity(boost::shared_ptr<Entity>(mBoard));
 
 		mPreviewBoard = boost::shared_ptr<Board>(new Board(5, 5));
-		mPreviewBoard->setPosition(225.f, 25.f);
+		mPreviewBoard->setPosition(225.f, 297.f);
 		addEntity(boost::shared_ptr<Entity>(mPreviewBoard));
 
 		mCurrentPiece = boost::shared_ptr<Piece>(new Piece(mBoard, 0, 5));
@@ -48,6 +49,8 @@ namespace sm
 		Game::instance()->getAudio()->getMusicPiece(mMusicPiece)->openFromFile("assets/main_theme.ogg");
 		Game::instance()->getAudio()->getMusicPiece(mMusicPiece)->setLoop(true);
 		Game::instance()->getAudio()->playMusicPiece(mMusicPiece);
+
+		addEntity(boost::shared_ptr<Entity>(new MainStateEntity()));
 	}
 
 	void MainState::update(void)

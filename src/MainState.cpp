@@ -9,6 +9,8 @@
 #include "AudioSystem.h"
 #include "InputSystem.h"
 #include "MainStateEntity.h"
+#include "DataList.h"
+#include "DataElement.h"
 
 namespace sm
 {
@@ -20,8 +22,10 @@ namespace sm
 			                                     sf::seconds(0.4f)
 	                                            };
 
+	const float MainState::Scores[5] = { 10.f, 10.f*2.f, 10.f*4.f, 10.f*8.f, 10.f*16.f };
+
 	MainState::MainState(void): State("game"), mClock(), mTime(), mTimeScale(0), 
-		mMusicPiece(), mBoard(), mPreviewBoard(), mCurrentPiece(), mNextPiece()		
+		mMusicPiece(), mScore(0L), mBoard(), mPreviewBoard(), mCurrentPiece(), mNextPiece()		
 	{
 		mTime = TickingTimes[mTimeScale];
 	}
@@ -54,6 +58,25 @@ namespace sm
 
 	void MainState::update(void)
 	{
+		// calculate points
+		const Game::ActionContainer actions = Game::instance()->getActions();
+		Game::ActionContainer::const_iterator action = actions.cbegin();
+		for(; action != actions.cend(); ++action)
+		{
+			if((*action)->getId() == "delete_block_result")
+			{
+				int deleted = 0;
+				if((*action)->getData()->pollInteger("result", deleted) && deleted > 0)
+				{
+					long int score_inc = (long int) (deleted*Scores[mTimeScale]);
+					mScore += score_inc;
+					boost::shared_ptr<Action> action(new Action("score_changed"));
+					action->insertData("score", DataElement(mScore));
+					Game::instance()->addAction(action);
+				}
+			}
+		}
+
 		if(Game::instance()->getMath()->getTimeOfTimer(mClock) > mTime)
 		{
 			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("tick")));
@@ -90,8 +113,8 @@ namespace sm
 			else
 			{
 				mCurrentPiece->turnOff();
-				mBoard->checkColors();
 				mBoard->checkHorizontal();
+				mBoard->checkColors();
 				mCurrentPiece->turnOn();
 			}
 		}

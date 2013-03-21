@@ -4,6 +4,9 @@
 #include <sstream>
 #include <SFML\Graphics\RenderTarget.hpp>
 #include "MainState.h"
+#include "Game.h"
+#include "Action.h"
+#include "DataList.h"
 
 namespace sm
 {
@@ -37,11 +40,24 @@ namespace sm
 
 	void MainStateEntity::update(void)
 	{
-		std::stringstream ss;
-		ss << std::setw(7) << std::setfill('0') << '0';
-		mTexts[1].setString(ss.str());
+		// calculate points
+		const Game::ActionContainer actions = Game::instance()->getActions();
+		Game::ActionContainer::const_iterator action = actions.cbegin();
+		for(; action != actions.cend(); ++action)
+		{
+			if((*action)->getId() == "score_changed")
+			{
+				long int score = 0;
+				if((*action)->getData()->pollLong("score", score))
+				{
+					std::stringstream ss;
+					ss << std::setw(7) << std::setfill('0') << score;
+					mTexts[1].setString(ss.str());
+				}
+			}
+		}
 
-		ss.str(std::string());
+		std::stringstream ss;
 		ss << "0";
 		mTexts[3].setString(ss.str());
 	}

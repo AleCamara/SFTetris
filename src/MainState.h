@@ -20,11 +20,13 @@ namespace sm
 
 	private:
 		static const sf::Time TickingTimes[5];
+		static const float Scores[5];
 
 		unsigned int mClock;
 		sf::Time mTime;
 		unsigned int mTimeScale;
 		unsigned int mMusicPiece;
+		long int mScore;
 		
 		boost::shared_ptr<Board> mBoard;
 		boost::shared_ptr<Board> mPreviewBoard;

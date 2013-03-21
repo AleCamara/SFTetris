@@ -1,8 +1,11 @@
 #include "Board.h"
 
+#include <string>
 #include <SFML\Graphics\RenderTarget.hpp>
 #include "Game.h"
 #include "Logger.h"
+#include "Action.h"
+#include "DataElement.h"
 
 namespace sm
 {
@@ -81,14 +84,7 @@ namespace sm
 
 			if(fullRow)
 			{
-				// turn off row
-				turnOffRow(currentRow);
-
-				// move rows down
-				moveRowsDown(currentRow);
-
-				// recheck current row
-				++currentRow;
+				markHorizontal(currentRow, 0, mSizeJ-1);
 			}
 		}
 	}
@@ -285,6 +281,7 @@ namespace sm
 
 	void Board::deleteMarkedBlocks(void)
 	{
+		int deleted = 0;
 		for(int row=0; row<(int)mSizeI; ++row)
 		{
 			for(int col=0; col<(int)mSizeJ; ++col)
@@ -292,8 +289,12 @@ namespace sm
 				if(mBlocks.at(getIndex(row, col))->isMarkedForDeletion())
 				{
 					moveRowsDown(row, col, col);
+					++deleted;
 				}
 			}
 		}
+		boost::shared_ptr<Action> action(new Action("delete_block_result"));
+		action->insertData(std::string("result"), DataElement(deleted));
+		Game::instance()->addAction(action);
 	}
 }

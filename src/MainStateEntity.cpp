@@ -31,7 +31,6 @@ namespace sm
 		mTexts[4].setColor(sf::Color(255U, 77U, 61U, 255U));
 	}
 
-
 	MainStateEntity::~MainStateEntity(void)
 	{
 	}

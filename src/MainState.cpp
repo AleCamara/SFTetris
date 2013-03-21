@@ -62,11 +62,6 @@ namespace sm
 				- (Game::instance()->getMath()->getTimeOfTimer(mClock) - mTime);
 			
 			Game::instance()->getMath()->restartTimer(mClock);
-
-			// with every tick check block deletion because of colors
-			mCurrentPiece->turnOff();
-			mBoard->checkColors();
-			mCurrentPiece->turnOn();
 		}
 
 		if(!mCurrentPiece->isStuck())
@@ -95,6 +90,7 @@ namespace sm
 			else
 			{
 				mCurrentPiece->turnOff();
+				mBoard->checkColors();
 				mBoard->checkHorizontal();
 				mCurrentPiece->turnOn();
 			}

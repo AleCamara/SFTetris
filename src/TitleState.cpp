@@ -18,6 +18,11 @@ namespace sm
 
 	void TitleState::init(void)
 	{
+		init(Action("empty"));
+	}
+
+	void TitleState::init(const Action& action)
+	{
 		addEntity(boost::shared_ptr<Entity>(new TitleImage()));
 
 		Game::instance()->getLogger()->getBuffer() << "TitleState::init()";

@@ -83,7 +83,7 @@ namespace sm
 				if(rule != mRuleMap.cend())
 				{
 					// switch state and stop searching actions
-					switchState(mCurrentState, rule->second);
+					switchState(mCurrentState, rule->second, *(*action));
 					break;
 				}
 
@@ -92,7 +92,7 @@ namespace sm
 				if(ruleForAll != mRuleForAllMap.cend())
 				{
 					// switch state and stop searching actions
-					switchState(mCurrentState, ruleForAll->second);
+					switchState(mCurrentState, ruleForAll->second, *(*action));
 					break;
 				}
 			}
@@ -141,7 +141,8 @@ namespace sm
 		}
 	}
 
-	void StateMachine::switchState(const std::string& origin, const std::string& destination)
+	void StateMachine::switchState(const std::string& origin, const std::string& destination,
+		const Action& action)
 	{
 		if(checkStateId(origin) && checkStateId(destination))
 		{
@@ -155,7 +156,7 @@ namespace sm
 			{
 				mBleepStack.push_back(destination);
 			}
-			mStates.at(destination)->init();
+			mStates.at(destination)->init(action);
 		}
 	}
 

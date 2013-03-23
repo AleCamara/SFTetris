@@ -15,6 +15,7 @@ namespace sm
 		virtual ~MainState(void) {}
 
 		virtual void init(void);
+		virtual void init(const Action&);
 		virtual void update(void);
 		virtual void quit(void);
 

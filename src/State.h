@@ -7,6 +7,8 @@
 
 namespace sm
 {
+	class Action;
+
 	class State: public IMutable, public sf::Drawable
 	{
 	public:
@@ -22,6 +24,7 @@ namespace sm
 		void clearEntities(void);
 
 		virtual void init(void) {}
+		virtual void init(const Action&) {}
 		virtual void update(void);
 		virtual void quit(void) {}
 		virtual void draw(sf::RenderTarget&, sf::RenderStates) const;

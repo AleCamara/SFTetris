@@ -14,6 +14,11 @@ namespace sm
 
 	void MenuState::init(void)
 	{
+		init(Action("empty"));
+	}
+
+	void MenuState::init(const Action& action)
+	{
 		addEntity(boost::shared_ptr<Entity>(new MenuImage()));
 		Game::instance()->getLogger()->getBuffer() << "MenuState::init()";
 		Game::instance()->getLogger()->debug(5);

@@ -35,7 +35,7 @@ namespace sm
 		StateContainerType mStates;
 		BleepStack mBleepStack;
 
-		void switchState(const std::string&, const std::string&);
+		void switchState(const std::string&, const std::string&, const Action& action);
 		void popBleepState(void);
 		bool checkStateId(const std::string&) const;
 	};

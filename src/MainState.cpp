@@ -34,6 +34,11 @@ namespace sm
 
 	void MainState::init(void)
 	{
+		init(Action("empty"));
+	}
+
+	void MainState::init(const Action& action)
+	{
 		mClock = Game::instance()->getMath()->createTimer();
 
 		Game::instance()->getLogger()->getBuffer() << "MainState::init()";

@@ -11,6 +11,7 @@ namespace sm
 		virtual ~MenuState(void) {}
 
 		virtual void init(void);
+		virtual void init(const Action&);
 		virtual void update(void);
 		virtual void quit(void);
 	};

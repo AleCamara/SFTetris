@@ -8,7 +8,7 @@
 
 namespace sm
 {
-	GameOverState::GameOverState(void): State("gameover")
+	GameOverState::GameOverState(void): State("gameover", true)
 	{
 	}
 

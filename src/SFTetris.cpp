@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
 	sm::Game::instance()->addRule("gomenu", "game", "menu");
 	sm::Game::instance()->addRule("gotitle", "game", "title");
 	sm::Game::instance()->addRule("gogameover", "game", "gameover");
-	sm::Game::instance()->addRule("restart", "gameover", "game");
 	sm::Game::instance()->addRule("gotitle", "gameover", "title");
 
 	// go for it!

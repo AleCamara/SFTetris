@@ -71,10 +71,21 @@ namespace sm
 					break;
 				}
 
-				// bleep states
+				// bleep state "back"
 				if((*action)->getId() == "back" && mBleepStack.size() > 0)
 				{
 					popBleepState();
+					continue;
+				}
+
+				// bleep state "restart"
+				if((*action)->getId() == "restart" && mBleepStack.size() > 0)
+				{
+					popBleepState();
+					if(checkStateId(mCurrentState))
+					{
+						mStates[mCurrentState]->init();
+					}
 					continue;
 				}
 

@@ -121,6 +121,11 @@ namespace sm
 			// check for game over
 			if(mCurrentPiece->checkCollision())
 			{
+				boost::shared_ptr<Action> action(new Action("gogameover"));
+				action->insertData("score", DataElement(mScore));
+				action->insertData("level", DataElement((int)mTimeScale));
+				Game::instance()->addAction(action);
+
 				Game::instance()->getLogger()->getBuffer() << "GAME OVER!";
 				Game::instance()->getLogger()->debug(5);
 			}

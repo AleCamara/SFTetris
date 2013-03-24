@@ -30,13 +30,9 @@ namespace sm
 		{
 			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("back")));
 		}
-		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Keyboard::S))
-		{
-			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("gotitle")));
-		}
 		if(Game::instance()->getInput()->isKeyReleased(InputSystem::Keyboard::Escape))
 		{
-			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("exit")));
+			Game::instance()->addAction(boost::shared_ptr<Action>(new Action("gotitle")));
 		}
 	}
 
